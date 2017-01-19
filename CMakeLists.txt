@@ -20,7 +20,7 @@ file(GLOB SRC_DIRECTORIES "src/*")
 
 add_subdirectory(glimac)
 
-add_executable(roller_coster main.cpp ${SRC_DIRECTORIES} ${SHADERS_FILES})
+add_executable(roller_coster main.cpp ${SRC_DIRECTORIES} ${SHADERS_FILES} src/Ground.cpp include/Ground.hpp)
 target_link_libraries(roller_coster ${ALL_LIBRARIES})
 
 # Copy files in build folder
