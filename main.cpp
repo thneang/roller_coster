@@ -34,6 +34,15 @@ int main(int argc, char** argv) {
             if(windowManager.isKeyPressed(SDLK_ESCAPE)){
                 done = true;
             }
+            if(windowManager.isKeyPressed(SDLK_n)){
+
+            }
+            if(windowManager.isKeyPressed(SDLK_c)){
+
+            }
+            if(windowManager.isKeyPressed(SDLK_s)){
+
+            }
         }
 
         /*********************************
