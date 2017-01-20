@@ -5,19 +5,31 @@
 #include "Ground.hpp"
 namespace glimac {
     void Ground::build(GLfloat width, GLfloat height) {
-
         std::vector<ShapeVertex> data;
-        for(int i=0;i<6;i++){
-            ShapeVertex vertex;
-            vertex.texCoords.x = i * rcpLat;
-            vertex.texCoords.y = 1.f - j * rcpLong;
+        for(int i=0;i<width;i++){
+            for(int j=0;j<height;j++){
+                ShapeVertex vertex;
+                vertex.position.x = i;
+                vertex.position.z = j;
+                vertex.position.y = 0;
 
-            vertex.normal.x = sin(i * dPhi) * cosTheta;
-            vertex.normal.y = sinTheta;
-            vertex.normal.z = cos(i * dPhi) * cosTheta;
+                vertex.normal = vertex.position;
 
-            vertex.position = r * vertex.normal;
-            data.push_back(vertex);
+                data.push_back(vertex);
+            }
         }
+        m_nVertexCount = width*height+width*height/2;
+
+        for(int i=0;i<width;i++) {
+            for (int j = 0; j < height; j++) {
+                m_Vertices.push_back(data[i+j]);
+                m_Vertices.push_back(data[i+j+width]);
+                m_Vertices.push_back(data[i+j+width+1]);
+                m_Vertices.push_back(data[i+j]);
+                m_Vertices.push_back(data[i+j+width+1]);
+                m_Vertices.push_back(data[i+j+1]);
+            }
+        }
+
     }
 }
