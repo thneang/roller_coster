@@ -9,14 +9,14 @@ namespace glimac {
         for(int i=0;i<width;i++){
             for(int j=0;j<height;j++){
                 ShapeVertex vertex;
-                vertex.position.x = i;
-                vertex.position.z = j;
+                vertex.position.x = i/width;
+                vertex.position.z = j/height;
                 vertex.position.y = 0;
 
                 vertex.normal = vertex.position / sqrt(width/2*width/2+height/2*height/2);
 
-                vertex.texCoords.x = i+0.5;
-                vertex.texCoords.y = -j+0.5;
+                vertex.texCoords.x = i/width+0.5;
+                vertex.texCoords.y = -j/height+0.5;
 
                 data.push_back(vertex);
             }
