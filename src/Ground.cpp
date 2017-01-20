@@ -13,7 +13,7 @@ namespace glimac {
                 vertex.position.z = j;
                 vertex.position.y = 0;
 
-                vertex.normal = vertex.position;
+                vertex.normal = vertex.position / sqrt(width/2*width/2+height/2*height/2);
 
                 vertex.texCoords.x = i+0.5;
                 vertex.texCoords.y = -j+0.5;
