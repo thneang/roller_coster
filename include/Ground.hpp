@@ -11,12 +11,12 @@
 namespace glimac {
     class Ground {
     public:
-        void build(GLfloat width, GLfloat height);
         Ground(GLfloat width, GLfloat height) :
                 m_nVertexCount(0) {
             build(width,height);
         }
     private:
+        void build(GLfloat width, GLfloat height);
         std::vector<ShapeVertex> m_Vertices;
         GLsizei m_nVertexCount; // Nombre de sommets
     };
