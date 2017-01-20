@@ -25,6 +25,7 @@ target_link_libraries(roller_coster ${ALL_LIBRARIES})
 
 # Copy files in build folder
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets/textures DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets)
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets/3D_models DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets)
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/shaders DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 #configure_file(${CMAKE_CURRENT_SOURCE_DIR}/assets/textures/* ${CMAKE_CURRENT_BINARY_DIR}/assets/textures/* COPYONLY)
 #configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/* ${CMAKE_CURRENT_BINARY_DIR}/shaders/* COPYONLY)
