@@ -15,6 +15,9 @@ namespace glimac {
 
                 vertex.normal = vertex.position;
 
+                vertex.texCoords.x = i;
+                vertex.texCoords.y = j;
+
                 data.push_back(vertex);
             }
         }
