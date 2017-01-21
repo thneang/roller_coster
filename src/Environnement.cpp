@@ -1,7 +1,5 @@
 #include <Environnement.hpp>
-#include <glimac/Geometry.hpp>
 #include <GL_global.hpp>
-#include <glimac/Image.hpp>
 
 using namespace glimac;
 

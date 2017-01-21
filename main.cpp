@@ -1,7 +1,7 @@
 #include <glimac/SDLWindowManager.hpp>
 #include <GL/glew.h>
 #include <iostream>
-#include <Environnement.hpp>
+#include <World.hpp>
 
 using namespace glimac;
 
@@ -26,8 +26,9 @@ int main(int argc, char** argv) {
      * HERE SHOULD COME THE INITIALIZATION CODE
      *********************************/
 
-    Environnement environnement;
-    environnement.init(applicationPath);
+//    Environnement environnement;
+    World world;
+    world.init(applicationPath);
 
     // Application loop:
     bool done = false;
@@ -55,12 +56,12 @@ int main(int argc, char** argv) {
         /*********************************
          * HERE SHOULD COME THE RENDERING CODE
          *********************************/
-        environnement.draw();
+        world.draw();
 
         // Update the display
         windowManager.swapBuffers();
     }
-    environnement.free();
+    world.free();
 
     return EXIT_SUCCESS;
 }

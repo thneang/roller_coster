@@ -1,5 +1,7 @@
 #ifndef ROLLER_COSTER_DRAWABLE_HPP
 #define ROLLER_COSTER_DRAWABLE_HPP
+
+#include <glimac/Image.hpp>
 #include <glimac/Program.hpp>
 #include <iostream>
 
@@ -31,19 +33,18 @@ public :
     virtual void init(const FilePath& filepath = nullptr) = 0;
 
     // envoie l'image au gpu
-    virtual void init_texture() = 0;
+    virtual void init_texture() {};
 
     // envoie les sommets au gpu
-    virtual void init_vbo() = 0;
+    virtual void init_vbo() {};
 
     // decrit les données pour le gpu
-    virtual void init_vao() = 0;
+    virtual void init_vao() {};
 
     // permet d'utiliser l'indexation des sommets pour draw
     // cela permet de d'éviter de duppliquer des sommets
     // lorsqu'on dessine nos triangles pour les objets
-    virtual void init_index() {
-    }
+    virtual void init_index() {}
 
     // Demande de dessin a openGL
     virtual void draw() = 0;
