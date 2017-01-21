@@ -21,7 +21,11 @@ public :
 
     void init_vao();
 
+    void init_index();
+
     void draw();
+
+    void free();
 };
 
 

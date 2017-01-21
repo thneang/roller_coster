@@ -55,10 +55,12 @@ int main(int argc, char** argv) {
         /*********************************
          * HERE SHOULD COME THE RENDERING CODE
          *********************************/
+        environnement.draw();
 
         // Update the display
         windowManager.swapBuffers();
     }
+    environnement.free();
 
     return EXIT_SUCCESS;
 }
