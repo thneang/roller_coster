@@ -156,7 +156,7 @@ void Environnement::draw() {
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elements[0]);
 
-    mat4 translate = glm::translate(MVMatrix, vec3(0.0f,-1.0f,0.0f));
+    mat4 translate = glm::translate(MVMatrix, vec3(0.0f,-15.0f,0.0f));
 //    TIME += 1;
 
     glUniformMatrix4fv(uMVPMatrixId, 1, GL_FALSE, value_ptr(ProjMatrix * translate));

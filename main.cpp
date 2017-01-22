@@ -44,13 +44,13 @@ int main(int argc, char** argv) {
                 done = true;
             }
             if(windowManager.isKeyPressed(SDLK_n)){
-
+                //jour/nuit
             }
             if(windowManager.isKeyPressed(SDLK_c)){
-
+                //caméra global/centré
             }
             if(windowManager.isKeyPressed(SDLK_s)){
-
+                //véhicule arret/marche
             }
         }
 
