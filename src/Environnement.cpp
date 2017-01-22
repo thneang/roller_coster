@@ -1,5 +1,4 @@
 #include <Environnement.hpp>
-#include <GL_global.hpp>
 
 using namespace glimac;
 
@@ -18,6 +17,10 @@ void Environnement::init(const FilePath& applicationPath) {
 
     images[0] = loadImage(applicationPath.dirPath() + "assets/3D_models/SnowTerrain/686.jpg");
 
+    uMVPMatrixId = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
+    uMVMatrixId = glGetUniformLocation(program.getGLId(), "uMVMatrix");
+    uNormalMatrixId = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
+
 
 //    init_texture();
     init_vbo();
@@ -30,8 +33,7 @@ void Environnement::init(const FilePath& applicationPath) {
 void Environnement::init_texture() {
 
     // créer un buffer pour notre texture
-    // TODO corriger erreur de seg ici
-    glGenTextures(1, texture);
+    glGenTextures(1, &texture[0]);
 
 
     // on bind la texture
@@ -123,6 +125,13 @@ void Environnement::draw() {
     glBindVertexArray(vao);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elements[0]);
+
+    mat4 translate = glm::translate(MVMatrix, vec3(0.0f,-2.0f,0.0f));
+//    TIME += 1;
+
+    glUniformMatrix4fv(uMVPMatrixId, 1, GL_FALSE, value_ptr(ProjMatrix * translate));
+    glUniformMatrix4fv(uMVMatrixId, 1, GL_FALSE, value_ptr(MVMatrix));
+    glUniformMatrix4fv(uNormalMatrixId, 1, GL_FALSE, value_ptr(NormalMatrix * translate));
 
     // Draw the triangles !
     glDrawElements(

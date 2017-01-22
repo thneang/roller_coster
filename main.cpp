@@ -35,6 +35,7 @@ int main(int argc, char** argv) {
     while(!done) {
         // Event loop:
         SDL_Event e;
+//        TIME = windowManager.getTime();
         while(windowManager.pollEvent(e)) {
             if(e.type == SDL_QUIT) {
                 done = true; // Leave the loop after this iteration

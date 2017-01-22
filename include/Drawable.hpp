@@ -4,7 +4,9 @@
 #include <glimac/Image.hpp>
 #include <glimac/Program.hpp>
 #include <iostream>
+#include <GL_global.hpp>
 
+using namespace glm;
 using namespace glimac;
 using namespace std;
 
@@ -27,6 +29,17 @@ protected :
 
     // Program pour utiliser les shaders
     Program program;
+
+    GLuint uTextureId[1];
+
+    /************************* Id des matrices pour les shaders *******************************************************/
+    GLint uMVPMatrixId;
+
+    GLint uMVMatrixId;
+
+    GLint uNormalMatrixId;
+
+    /******************************************************************************************************************/
 
 public :
     // Init l'objet (allocation), envoie les données au gpu et demarre un programme pour les shaders
