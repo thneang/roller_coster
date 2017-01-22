@@ -34,9 +34,10 @@ int main(int argc, char** argv) {
     ivec2 mouse = windowManager.getMousePosition();
     bool done = false;
     while(!done) {
+        //utiliser pour avancer le véhicule
+        float time = windowManager.getTime();
         // Event loop:
         SDL_Event e;
-//        TIME = windowManager.getTime();
         while(windowManager.pollEvent(e)) {
             if(e.type == SDL_QUIT) {
                 done = true; // Leave the loop after this iteration
@@ -51,15 +52,17 @@ int main(int argc, char** argv) {
                 //caméra global/centré
             }
             if(windowManager.isKeyPressed(SDLK_s)){
+                cout << time << endl;
                 //véhicule arret/marche
             }
             ivec2 new_mouse = windowManager.getMousePosition();
             int diff_x = new_mouse.x - mouse.x;
             int diff_y = new_mouse.y - mouse.y;
             if(diff_x != 0 || diff_y != 0){
-                vec2 rotate = {new_mouse.x - mouse.x,new_mouse.y - mouse.y};
+                vec2 rotate = {diff_x,diff_y};
                 world.rotate(rotate);
             }
+            mouse = windowManager.getMousePosition();
         }
 
         /*********************************

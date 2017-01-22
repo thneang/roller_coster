@@ -194,7 +194,8 @@ void Environnement::translate(vec3 v){
 //            0.0, 0.0, 1.0);
 //}
 void Environnement::rotate(vec2 v){
-    mat4 rotate = glm::rotate(MVMatrix, 5.0f, vec3(0.0f,1.0f,0.0f));
+    cout<<v.x<<endl;
+    mat4 rotate = glm::rotate(MVMatrix, v.x/10.0f, vec3(0.0f,1.0f,0.0f));
     MVMatrix = rotate;
     ProjMatrix *= rotate;
     NormalMatrix *= rotate;
