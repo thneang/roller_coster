@@ -30,6 +30,7 @@ void Environnement::init(const FilePath& applicationPath) {
     init_vbo();
     init_vao();
     init_index();
+    translate(vec3(0.0f,-15.0f,0.0f));
 
 }
 
@@ -156,12 +157,12 @@ void Environnement::draw() {
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elements[0]);
 
-    mat4 translate = glm::translate(MVMatrix, vec3(0.0f,-15.0f,0.0f));
+//    mat4 translate = glm::translate(MVMatrix, vec3(0.0f,-15.0f,0.0f));
 //    TIME += 1;
 
-    glUniformMatrix4fv(uMVPMatrixId, 1, GL_FALSE, value_ptr(ProjMatrix * translate));
+    glUniformMatrix4fv(uMVPMatrixId, 1, GL_FALSE, value_ptr(ProjMatrix));
     glUniformMatrix4fv(uMVMatrixId, 1, GL_FALSE, value_ptr(MVMatrix));
-    glUniformMatrix4fv(uNormalMatrixId, 1, GL_FALSE, value_ptr(NormalMatrix * translate));
+    glUniformMatrix4fv(uNormalMatrixId, 1, GL_FALSE, value_ptr(NormalMatrix));
 
     // Draw the triangles !
     // afficher bien la forme grace au index mais texture impossible...
@@ -178,6 +179,25 @@ void Environnement::draw() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     glBindVertexArray(0);
+}
+
+void Environnement::translate(vec3 v){
+    mat4 translate = glm::translate(MVMatrix,v);
+    ProjMatrix *= translate;
+    NormalMatrix *= translate;
+}
+//glm::mat3 rotate(float a) {
+//    float ad = glm::radians(a);
+//    return glm::mat3(
+//            glm::cos(a), -(glm::sin(a)), 0.0,
+//            glm::sin(a), glm::cos(a), 0.0,
+//            0.0, 0.0, 1.0);
+//}
+void Environnement::rotate(vec2 v){
+    mat4 rotate = glm::rotate(MVMatrix, 5.0f, vec3(0.0f,1.0f,0.0f));
+    MVMatrix = rotate;
+    ProjMatrix *= rotate;
+    NormalMatrix *= rotate;
 }
 
 void Environnement::free() {

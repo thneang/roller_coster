@@ -16,6 +16,10 @@ public :
 
     void init(const FilePath& filepath = nullptr);
 
+    void translate(vec3 v);
+
+    void rotate(vec2 v);
+
     void draw();
 
     void free();

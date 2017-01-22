@@ -31,6 +31,7 @@ int main(int argc, char** argv) {
     world.init(applicationPath);
 
     // Application loop:
+    ivec2 mouse = windowManager.getMousePosition();
     bool done = false;
     while(!done) {
         // Event loop:
@@ -51,6 +52,13 @@ int main(int argc, char** argv) {
             }
             if(windowManager.isKeyPressed(SDLK_s)){
                 //véhicule arret/marche
+            }
+            ivec2 new_mouse = windowManager.getMousePosition();
+            int diff_x = new_mouse.x - mouse.x;
+            int diff_y = new_mouse.y - mouse.y;
+            if(diff_x != 0 || diff_y != 0){
+                vec2 rotate = {new_mouse.x - mouse.x,new_mouse.y - mouse.y};
+                world.rotate(rotate);
             }
         }
 
