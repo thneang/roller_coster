@@ -1,13 +1,15 @@
 #include <Environnement.hpp>
+#include <zconf.h>
 
 using namespace glimac;
+using namespace std;
 
 // TODO On peut peut-être généraliser pour tout dessiner avec le meme code
 void Environnement::init(const FilePath& applicationPath) {
     this->environnement.loadOBJ(
-            applicationPath.dirPath() + "assets/3D_models/SnowTerrain/SnowTerrain.obj",
-            applicationPath.dirPath() + "assets/3D_models/SnowTerrain/SnowTerrain.mtl",
-            true
+            applicationPath.dirPath() + "assets/3D_models/Landscape/environnement.obj",
+            applicationPath.dirPath() + "assets/3D_models/Landscape/environnement.mtl",
+            false
     );
 
     program = loadProgram(applicationPath.dirPath() + "shaders/Environnement.vs.glsl",
@@ -15,21 +17,22 @@ void Environnement::init(const FilePath& applicationPath) {
 
     program.use();
 
-    images[0] = loadImage(applicationPath.dirPath() + "assets/3D_models/SnowTerrain/686.jpg");
+    images[0] = loadImage(applicationPath.dirPath() + "assets/3D_models/Landscape/environnement.jpg");
 
+    uTextureId = glGetUniformLocation(program.getGLId(), "uTexture");
     uMVPMatrixId = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
     uMVMatrixId = glGetUniformLocation(program.getGLId(), "uMVMatrix");
     uNormalMatrixId = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
 
+    init_texture();
+//    duplicate_vertex();
 
-//    init_texture();
     init_vbo();
     init_vao();
     init_index();
 
 }
 
-// TODO
 void Environnement::init_texture() {
 
     // créer un buffer pour notre texture
@@ -43,16 +46,36 @@ void Environnement::init_texture() {
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, images[0]->getWidth(), images[0]->getHeight(), 0, GL_RGBA, GL_FLOAT, images[0]->getPixels());
 
 
-
     // filtre pour deux cas
-    /* Afin de pouvoir utiliser une texture, il faut spécifier à OpenGL des filtres que ce dernier appliquera lorsque
-    1) plusieurs pixels à l'écran sont couvert par un pixel de texture et
-    2) un pixel à l'écran couvre plusieurs pixels de texture. Rajoutez les lignes suivantes:
-    */
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Environnement::duplicate_vertex() {
+    // Notre buffer avec tous les vertex qui ont été duppliqué
+
+    /****** on dupplique donc nos sommets et en même temps on doit leur donner nos coordonnées de texture *****/
+    int nb_index = environnement.getMeshBuffer()[1].m_nIndexCount;
+    size_t offset = environnement.getMeshBuffer()[1].m_nIndexOffset;
+    m_VertexBuffer = vector<Geometry::Vertex>(nb_index);
+
+    for (int i = 0; i < nb_index; ++i) {
+
+        Geometry::Vertex tmp = {
+                environnement.getVertexBuffer()[environnement.getIndexBuffer()[i + offset]].m_Position,
+                environnement.getVertexBuffer()[environnement.getIndexBuffer()[i + offset]].m_Normal,
+                environnement.getVertexBuffer()[environnement.getIndexBuffer()[i + offset]].m_TexCoords
+        };
+
+
+
+        // On a un tableau d'indice qui sont les indices (dans le tableaux des vertexs) des sommets qui forme la figure
+        m_VertexBuffer.push_back(tmp);
+
+    }
+
 }
 
 void Environnement::init_vbo() {
@@ -63,7 +86,11 @@ void Environnement::init_vbo() {
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
     // Envoie les donnés
+    // version pour utiliser drawElement
     glBufferData(GL_ARRAY_BUFFER, this->environnement.getVertexCount()*sizeof(Geometry::Vertex), this->environnement.getVertexBuffer(), GL_STATIC_DRAW);
+
+//    glBufferData(GL_ARRAY_BUFFER, m_VertexBuffer.size() * sizeof(Geometry::Vertex), m_VertexBuffer.data(), GL_STATIC_DRAW);
+
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -99,9 +126,9 @@ void Environnement::init_index() {
     glBufferData(
             GL_ELEMENT_ARRAY_BUFFER,
 //             nombre de sommet utilisé par la mesh
-            environnement.getMeshBuffer()[1].m_nIndexCount * sizeof(unsigned int),
+            environnement.getMeshBuffer()[0].m_nIndexCount * sizeof(unsigned int),
 //             position du buffer qui contient les données
-            environnement.getIndexBuffer() + environnement.getMeshBuffer()[1].m_nIndexOffset,
+            environnement.getIndexBuffer() + environnement.getMeshBuffer()[0].m_nIndexOffset,
             GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
@@ -120,13 +147,16 @@ void Environnement::init_index() {
 
 }
 
-// TODO ajouter les matrices
 void Environnement::draw() {
     glBindVertexArray(vao);
 
+    // donne la texture au shader pour l'appliquer avec draw
+    glBindTexture(GL_TEXTURE_2D, texture[0]);
+    glUniform1i(uTextureId, 0);
+
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elements[0]);
 
-    mat4 translate = glm::translate(MVMatrix, vec3(0.0f,-2.0f,0.0f));
+    mat4 translate = glm::translate(MVMatrix, vec3(0.0f,-1.0f,0.0f));
 //    TIME += 1;
 
     glUniformMatrix4fv(uMVPMatrixId, 1, GL_FALSE, value_ptr(ProjMatrix * translate));
@@ -134,12 +164,16 @@ void Environnement::draw() {
     glUniformMatrix4fv(uNormalMatrixId, 1, GL_FALSE, value_ptr(NormalMatrix * translate));
 
     // Draw the triangles !
+    // afficher bien la forme grace au index mais texture impossible...
     glDrawElements(
             GL_TRIANGLES,      // mode
-            environnement.getMeshBuffer()[1].m_nIndexCount,    // count
+            environnement.getMeshBuffer()[0].m_nIndexCount,    // count
             GL_UNSIGNED_INT,   // type
             (void*)0       // element array buffer offset
     );
+
+//    glDrawArrays(GL_TRIANGLES, 0, m_VertexBuffer.size());
+
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 

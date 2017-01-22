@@ -17,6 +17,8 @@ public :
 
     void init_texture();
 
+    void duplicate_vertex();
+
     void init_vbo();
 
     void init_vao();
