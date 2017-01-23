@@ -3,8 +3,8 @@
 
 #include <glimac/Image.hpp>
 #include <glimac/Program.hpp>
-#include <iostream>
 #include <GL_global.hpp>
+#include <iostream>
 #include <glimac/Geometry.hpp>
 
 using namespace glm;
@@ -22,7 +22,7 @@ protected :
     GLuint vao;
 
     // Contient les "ID" de nos meshes
-    GLuint elements[2];
+    GLuint elements[4];
 
     // Le buffer qui contient nos vertex, une duplication de sommets importé est nécessaire pour appliquer des textures
     // on fait cela car un meme vertex ne peut pas avoir plusieurs coordonnée de texture;

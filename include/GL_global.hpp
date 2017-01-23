@@ -1,30 +1,34 @@
 #ifndef ROLLER_COSTER_GL_GLOBAL_HPP
 #define ROLLER_COSTER_GL_GLOBAL_HPP
 
-using namespace glm;
+#include <GL/glew.h>
+#include <glimac/glm.hpp>
 
-const static GLint VERTEX_ATTRIB_POSITION = 0;
-const static GLint VERTEX_ATTRIB_POSITION_SIZE = 3;
-const static GLint VERTEX_ATTRIB_NORMAL = 1;
-const static GLint VERTEX_ATTRIB_NORMAL_SIZE = 3;
-const static GLint VERTEX_ATTRIB_TEXTURE_COORD = 2;
-const static GLint VERTEX_ATTRIB_TEXTURE_COORD_SIZE = 2;
-static GLint WIN_WIDTH = 800;
-static GLint WIN_HEIGTH = 600;
-static float NEAR = 0.1f;
-static float FAR = 100.f;
+namespace global {
+    extern const GLint VERTEX_ATTRIB_POSITION;
+    extern const  GLint VERTEX_ATTRIB_POSITION_SIZE;
+    extern const  GLint VERTEX_ATTRIB_NORMAL;
+    extern const  GLint VERTEX_ATTRIB_NORMAL_SIZE;
+    extern const  GLint VERTEX_ATTRIB_TEXTURE_COORD;
+    extern const  GLint VERTEX_ATTRIB_TEXTURE_COORD_SIZE;
+    extern  GLint WIN_WIDTH;
+    extern  GLint WIN_HEIGTH;
+    extern  float NEAR;
+    extern  float FAR;
 // Plus tard pour gérer des mouvements, pour la trajectoire surement
-//static float TIME;
+// float TIME;
 
 /************************ Matrices de reference de la scène, les objets sont tous dessiner par rapport à ça **************************/
 // Modifier ces variables les modifies pour tous les objets Drawable
 // Matrice ID
-static mat4 ModelMatrix;
+    extern  glm::mat4 ModelMatrix;
 
 // convention, dessine l'objet vers le négatif de l'axe des Z
-static mat4 ProjMatrix = perspective(radians(70.f), (float)WIN_WIDTH/WIN_HEIGTH, NEAR, FAR);
-static mat4 MVMatrix = translate(ModelMatrix, vec3(0.f,0.f,-5.0f));
-static mat4 NormalMatrix = transpose(inverse(MVMatrix));
+    extern  glm::mat4 ProjMatrix;
+    extern  glm::mat4 MVMatrix;
+    extern  glm::mat4 NormalMatrix;
 
 /******************************************************************************************************************/
+}
+
 #endif //ROLLER_COSTER_GL_GLOBAL_HPP

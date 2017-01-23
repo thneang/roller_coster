@@ -55,14 +55,14 @@ int main(int argc, char** argv) {
                 cout << time << endl;
                 //véhicule arret/marche
             }
-            ivec2 new_mouse = windowManager.getMousePosition();
-            int diff_x = new_mouse.x - mouse.x;
-            int diff_y = new_mouse.y - mouse.y;
-            if(diff_x != 0 || diff_y != 0){
-                vec2 rotate = {diff_x,diff_y};
-                world.rotate(rotate);
-            }
-            mouse = windowManager.getMousePosition();
+//            ivec2 new_mouse = windowManager.getMousePosition();
+//            int diff_x = new_mouse.x - mouse.x;
+//            int diff_y = new_mouse.y - mouse.y;
+//            if(diff_x != 0 || diff_y != 0){
+//                vec2 rotate = {diff_x,diff_y};
+//                world.rotate(rotate);
+//            }
+//            mouse = windowManager.getMousePosition();
         }
 
         /*********************************

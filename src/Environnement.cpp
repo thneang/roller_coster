@@ -3,6 +3,7 @@
 
 using namespace glimac;
 using namespace std;
+using namespace global;
 
 // TODO On peut peut-être généraliser pour tout dessiner avec le meme code
 void Environnement::init(const FilePath& applicationPath) {
