@@ -19,6 +19,12 @@ public :
 
     void draw();
 
+    void rotate(float angle,vec3 v);
+
+    void translate(vec3 v);
+
+    void scale(vec3 v);
+
     void free();
 };
 

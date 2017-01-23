@@ -82,18 +82,23 @@ public :
     // libere l'espace allouée, doit être appelé à la fin du programme
     virtual void free() = 0;
 
-
-    virtual void rotate(vec2 v){
+    virtual void rotate(float angle,vec3 v){
+        mat4 rotate = glm::rotate(global::MVMatrix,angle,v);
+        ProjMatrixMul *= rotate;
+        NormalMatrixMul *= rotate;
     }
+
     virtual void translate(vec3 v){
         mat4 translate = glm::translate(global::MVMatrix,v);
         ProjMatrixMul *= translate;
         NormalMatrixMul *= translate;
     }
-    virtual void scale(vec2 v){
 
+    virtual void scale(vec3 v){
+        mat4 scale = glm::scale(global::MVMatrix,v);
+        ProjMatrixMul *= scale;
+        NormalMatrixMul *= scale;
     }
-
 };
 
 

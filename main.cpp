@@ -58,9 +58,9 @@ int main(int argc, char** argv) {
             ivec2 new_mouse = windowManager.getMousePosition();
             int diff_x = new_mouse.x - mouse.x;
             int diff_y = new_mouse.y - mouse.y;
-            if((diff_x != 0 || diff_y != 0) && (windowManager.isMouseButtonPressed(SDL_MOUSEBUTTONDOWN))){
+            if((diff_x != 0 || diff_y != 0) && windowManager.isKeyPressed(SDLK_r)){
                 vec2 rotate = {diff_x,diff_y};
-                world.rotate(rotate);
+                world.rotate(diff_x/2,vec3(0.0f,1.0f,0.0f));
             }
             mouse = windowManager.getMousePosition();
         }
