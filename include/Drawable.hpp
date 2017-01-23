@@ -83,9 +83,9 @@ public :
     virtual void free() = 0;
 
     virtual void rotate(float angle,vec3 v){
-        mat4 rotate = glm::rotate(global::MVMatrix,angle,v);
-        ProjMatrixMul *= rotate;
-        NormalMatrixMul *= rotate;
+        MVMatrixMul = glm::rotate(global::MVMatrix,angle,v);
+        ProjMatrixMul *= MVMatrixMul;
+        NormalMatrixMul *= MVMatrixMul;
     }
 
     virtual void translate(vec3 v){

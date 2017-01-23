@@ -21,7 +21,7 @@ public :
 
     void rotate(float angle,vec3 v);
 
-    void rotate(vec2 v);
+    void rotateCamera(vec2 v);
 
     void translate(vec3 v);
 

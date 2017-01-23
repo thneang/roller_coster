@@ -38,6 +38,7 @@ int main(int argc, char** argv) {
         float time = windowManager.getTime();
         // Event loop:
         SDL_Event e;
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         while(windowManager.pollEvent(e)) {
             if(e.type == SDL_QUIT) {
                 done = true; // Leave the loop after this iteration
@@ -58,9 +59,10 @@ int main(int argc, char** argv) {
             ivec2 new_mouse = windowManager.getMousePosition();
             int diff_x = new_mouse.x - mouse.x;
             int diff_y = new_mouse.y - mouse.y;
-            if((diff_x != 0 || diff_y != 0) && windowManager.isKeyPressed(SDLK_r)){
+            /*(diff_x != 0 || diff_y != 0) &&*/
+            if(windowManager.isKeyPressed(SDLK_r)){
                 vec2 rotate = {diff_x,diff_y};
-                world.rotate(rotate);
+                world.rotateCamera(rotate);
             }
             mouse = windowManager.getMousePosition();
         }
