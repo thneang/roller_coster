@@ -21,12 +21,6 @@ void World::draw() {
     vehicle.draw();
 }
 
-// TODO effacer les translates de environnement
-void World::translate(vec3 v){
-//    environnement.translate(v);
-    vehicle.translate(v);
-}
-
 void World::free() {
 //    environnement.free();
     vehicle.free();

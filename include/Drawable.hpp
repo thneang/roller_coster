@@ -84,7 +84,6 @@ public :
 
 
     virtual void rotate(vec2 v){
-
     }
     virtual void translate(vec3 v){
         mat4 translate = glm::translate(global::MVMatrix,v);
