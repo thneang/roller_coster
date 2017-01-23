@@ -21,6 +21,8 @@ public :
 
     void rotate(float angle,vec3 v);
 
+    void rotate(vec2 v);
+
     void translate(vec3 v);
 
     void scale(vec3 v);

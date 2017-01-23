@@ -19,7 +19,18 @@ void World::draw() {
     vehicle.draw();
 }
 
-void World::rotate(float angle,vec3 v){
+void World::rotate(vec2 v){
+    float sens = -1.0f;
+    if(v.x>=0){
+        sens = 1.0f;
+    }
+    cout << sens << endl;
+    mat4 rotate = glm::rotate(MVMatrix,abs(v.x),vec3(0.0f,0.0f,sens));
+    ProjMatrix *= rotate;
+    NormalMatrix *= rotate;
+}
+
+void World::rotate(float angle, vec3 v){
     mat4 rotate = glm::rotate(MVMatrix,angle,v);
     ProjMatrix *= rotate;
     NormalMatrix *= rotate;

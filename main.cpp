@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
             int diff_y = new_mouse.y - mouse.y;
             if((diff_x != 0 || diff_y != 0) && windowManager.isKeyPressed(SDLK_r)){
                 vec2 rotate = {diff_x,diff_y};
-                world.rotate(diff_x/2,vec3(0.0f,1.0f,0.0f));
+                world.rotate(rotate);
             }
             mouse = windowManager.getMousePosition();
         }

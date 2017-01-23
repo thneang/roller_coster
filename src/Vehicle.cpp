@@ -31,6 +31,8 @@ void Vehicle::init(const FilePath& applicationPath) {
     init_vao();
     init_index();
 
+    scale(vec3(0.5f,0.5f,0.5f));
+
 }
 
 void Vehicle::init_texture() {
