@@ -171,7 +171,6 @@ void Vehicle::draw() {
     for (int i = 0; i < vehicle.getMeshCount(); ++i) {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elements[i]);
 
-        cout << "ProjMatrix dans vehicule" << endl << ProjMatrix << endl;
         mat4 ProjMatrixVehicle = ProjMatrix * ProjMatrixMul;
         mat4 NormalMatrixVehicle = NormalMatrix * NormalMatrixMul;
         glUniformMatrix4fv(uMVPMatrixId, 1, GL_FALSE, value_ptr(ProjMatrixVehicle));
