@@ -24,9 +24,9 @@ void World::rotateCamera(vec2 v){
     if(v.x >= 0){
         sens = 1.0f;
     }
-    mat4 rotate = glm::rotate(MVMatrix,v.x/100,vec3(0,1,0));
-    ProjMatrix *= rotate;
-    NormalMatrix *= rotate;
+    mat4 rotate = glm::rotate(ProjMatrix,v.x/100,vec3(0,1,0));
+    ProjMatrix = rotate;
+    NormalMatrix = rotate;
 }
 
 void World::rotate(float angle, vec3 v){
