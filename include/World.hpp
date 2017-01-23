@@ -4,6 +4,7 @@
 #include <Drawable.hpp>
 //#include <Environnement.hpp>
 #include <Vehicle.hpp>
+#include <RollPath.hpp>
 
 using namespace glimac;
 
@@ -13,6 +14,7 @@ private :
     // TODO Pouvoir faire un array de drawable pour mettre tout nos éléments
 //    Environnement environnement;
     Vehicle vehicle;
+    RollPath roll_path;
 public :
 
     void init(const FilePath& filepath = nullptr);
@@ -26,6 +28,8 @@ public :
     void translate(vec3 v);
 
     void scale(vec3 v);
+
+    void roll(float time);
 
     void free();
 };

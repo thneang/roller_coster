@@ -32,7 +32,10 @@ int main(int argc, char** argv) {
 
     // Application loop:
     ivec2 mouse = windowManager.getMousePosition();
+    bool vehicleOn = false;
     bool done = false;
+    float timeStop = windowManager.getTime();
+    float timelaps = 0;
     while(!done) {
         //utiliser pour avancer le véhicule
         float time = windowManager.getTime();
@@ -53,7 +56,14 @@ int main(int argc, char** argv) {
                 //caméra global/centré
             }
             if(windowManager.isKeyPressed(SDLK_s)){
-                cout << time << endl;
+                if(!vehicleOn){
+                    vehicleOn = true;
+                    timelaps  += time - timeStop;
+                }
+                else{
+                    vehicleOn = false;
+                    timeStop = time;
+                }
                 //véhicule arret/marche
             }
             ivec2 new_mouse = windowManager.getMousePosition();
@@ -65,6 +75,9 @@ int main(int argc, char** argv) {
                 world.rotateCamera(rotate);
             }
             mouse = windowManager.getMousePosition();
+            if(vehicleOn){
+                world.roll(time-timelaps);
+            }
         }
 
         /*********************************

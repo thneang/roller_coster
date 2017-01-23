@@ -3,6 +3,7 @@
 
 #include <glimac/Geometry.hpp>
 #include <Drawable.hpp>
+#include <RollPath.hpp>
 
 using namespace glimac;
 
@@ -27,6 +28,8 @@ public :
     void init_index();
 
     void draw();
+
+    void roll(vec3 direction);
 
     void free();
 };

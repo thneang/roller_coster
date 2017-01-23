@@ -6,6 +6,7 @@ using namespace global;
 void World::init(const FilePath& filepath) {
 //    environnement.init(filepath);
     vehicle.init(filepath);
+    roll_path.init(filepath);
     // J'ai déplacé le monde très loin pour avoir une vue global
     translate(vec3(0.0f,0.0f,-1000.0f));
     rotate(90.0f,vec3(0.0f,1.0f,0.0f));
@@ -39,6 +40,10 @@ void World::scale(vec3 v){
     MVMatrix = glm::scale(MVMatrix,v);
     ProjMatrix *= MVMatrix;
     NormalMatrix *= MVMatrix;
+}
+
+void World::roll(float time){
+    vehicle.roll(roll_path.getPointCurve(time));
 }
 
 void World::free() {

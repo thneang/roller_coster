@@ -198,6 +198,11 @@ void Vehicle::draw() {
     glBindVertexArray(0);
 }
 
+void Vehicle::roll(vec3 v){
+    vec3 vec_trans = v-vehicle.getVertexBuffer()->m_Position;
+    translate(vec_trans);
+}
+
 void Vehicle::free() {
     glDeleteBuffers(1, &vbo);
     glDeleteVertexArrays(1, &vao);
