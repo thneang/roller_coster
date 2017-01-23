@@ -30,15 +30,15 @@ void World::rotate(float angle, vec3 v){
 }
 
 void World::translate(vec3 v){
-    mat4 translate = glm::translate(MVMatrix,v);
-    ProjMatrix *= translate;
+    mat4 translate = glm::translate(ProjMatrix,v);
+    ProjMatrix = translate;
     NormalMatrix *= translate;
 }
 
 void World::scale(vec3 v){
-    mat4 scale = glm::scale(MVMatrix,v);
-    ProjMatrix *= scale;
-    NormalMatrix *= scale;
+    MVMatrix = glm::scale(MVMatrix,v);
+    ProjMatrix *= MVMatrix;
+    NormalMatrix *= MVMatrix;
 }
 
 void World::free() {
