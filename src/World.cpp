@@ -9,9 +9,6 @@ void World::init(const FilePath& filepath) {
     // J'ai déplacé le monde très loin pour avoir une vue global
     translate(vec3(0.0f,0.0f,-1000.0f));
     rotate(90.0f,vec3(0.0f,1.0f,0.0f));
-
-    ProjMatrix *= ProjMatrixMul;
-    NormalMatrix *= NormalMatrixMul;
 }
 
 void World::draw() {
@@ -20,13 +17,10 @@ void World::draw() {
 }
 
 void World::rotateCamera(vec2 v){
-    float sens = -1.0f;
-    if(v.x >= 0){
-        sens = 1.0f;
-    }
-    mat4 rotate = glm::rotate(ProjMatrix,v.x/100,vec3(0,1,0));
-    ProjMatrix = rotate;
-    NormalMatrix = rotate;
+    ProjMatrix = glm::rotate(ProjMatrix,v.x/100,vec3(0,1,0));
+    NormalMatrix *= ProjMatrix;
+    ProjMatrix = glm::rotate(ProjMatrix,v.y/100,vec3(1,0,0));
+    NormalMatrix *= ProjMatrix;
 }
 
 void World::rotate(float angle, vec3 v){
