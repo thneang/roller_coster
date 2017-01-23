@@ -11,6 +11,7 @@ class Vehicle : public Drawable {
 private :
     glimac::Geometry vehicle;
 
+
 public :
 
     void init(const FilePath& filepath = nullptr);

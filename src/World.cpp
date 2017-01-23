@@ -24,11 +24,9 @@ void World::draw() {
 // TODO effacer les translates de environnement
 void World::translate(vec3 v){
 //    environnement.translate(v);
+    vehicle.translate(v);
 }
 
-void World::rotate(vec2 v){
-//    environnement.rotate(v);
-}
 void World::free() {
 //    environnement.free();
     vehicle.free();

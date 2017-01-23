@@ -25,10 +25,6 @@ public :
 
     void init_index();
 
-    void translate(vec3 v);
-
-    void rotate(vec2 v);
-
     void draw();
 
     void free();

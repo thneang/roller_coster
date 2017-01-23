@@ -182,25 +182,6 @@ void Environnement::draw() {
     glBindVertexArray(0);
 }
 
-void Environnement::translate(vec3 v){
-    mat4 translate = glm::translate(MVMatrix,v);
-    ProjMatrix *= translate;
-    NormalMatrix *= translate;
-}
-//glm::mat3 rotate(float a) {
-//    float ad = glm::radians(a);
-//    return glm::mat3(
-//            glm::cos(a), -(glm::sin(a)), 0.0,
-//            glm::sin(a), glm::cos(a), 0.0,
-//            0.0, 0.0, 1.0);
-//}
-void Environnement::rotate(vec2 v){
-    cout<<v.x<<endl;
-    mat4 rotate = glm::rotate(MVMatrix, v.x/10.0f, vec3(0.0f,1.0f,0.0f));
-    MVMatrix = rotate;
-    ProjMatrix *= rotate;
-    NormalMatrix *= rotate;
-}
 
 void Environnement::free() {
     glDeleteBuffers(1, &vbo);

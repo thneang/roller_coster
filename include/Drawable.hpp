@@ -45,6 +45,12 @@ protected :
 
     GLint uNormalMatrixId;
 
+    mat4 ProjMatrixMul;
+
+    mat4 MVMatrixMul;
+
+    mat4 NormalMatrixMul;
+
     /******************************************************************************************************************/
 
 public :
@@ -75,6 +81,19 @@ public :
 
     // libere l'espace allouée, doit être appelé à la fin du programme
     virtual void free() = 0;
+
+
+    virtual void rotate(vec2 v){
+
+    }
+    virtual void translate(vec3 v){
+        mat4 translate = glm::translate(global::MVMatrix,v);
+        ProjMatrixMul *= translate;
+        NormalMatrixMul *= translate;
+    }
+    virtual void scale(vec2 v){
+
+    }
 
 };
 
