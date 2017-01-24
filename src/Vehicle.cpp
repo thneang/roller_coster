@@ -6,9 +6,13 @@ using namespace std;
 using namespace global;
 
 void Vehicle::init(const FilePath& applicationPath) {
+    // ATTENTION bien vérifier le PATH pour material si c'est pas chargé.
+    // Faire la vérif pour la ligne mtllib dans le fichier OBJ ET dans le code
+    // avec mtllib du fichier OBJ mettre /nom_du_mtl
+    // dans l'appel loadOBJ mettre repertoire mtl mais pas le fichier mtl
     this->vehicle.loadOBJ(
             applicationPath.dirPath() + "assets/3D_models/Vehicle/vehicle.obj",
-            applicationPath.dirPath() + "assets/3D_models/Vehicle/vehicle.mtl",
+            applicationPath.dirPath() + "assets/3D_models/Vehicle/",
             true
     );
 
