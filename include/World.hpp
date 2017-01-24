@@ -1,11 +1,8 @@
 #ifndef ROLLER_COSTER_WORLD_HPP
 #define ROLLER_COSTER_WORLD_HPP
 
-#include <Drawable.hpp>
-//#include <Environnement.hpp>
 #include <Vehicle.hpp>
-
-using namespace glimac;
+#include <Environnement.hpp>
 
 class World : public Drawable {
 
@@ -15,17 +12,17 @@ private :
     Vehicle vehicle;
 public :
 
-    void init(const FilePath& filepath = nullptr);
+    void init(const glimac::FilePath& filepath = nullptr);
 
     void draw();
 
-    void rotate(float angle,vec3 v);
+    void rotate(float angle,glm::vec3 v);
 
-    void rotateCamera(vec2 v);
+    void rotateCamera(glm::vec2 v);
 
-    void translate(vec3 v);
+    void translate(glm::vec3 v);
 
-    void scale(vec3 v);
+    void scale(glm::vec3 v);
 
     void free();
 };

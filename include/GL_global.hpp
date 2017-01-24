@@ -11,10 +11,11 @@ namespace global {
     extern const  GLint VERTEX_ATTRIB_NORMAL_SIZE;
     extern const  GLint VERTEX_ATTRIB_TEXTURE_COORD;
     extern const  GLint VERTEX_ATTRIB_TEXTURE_COORD_SIZE;
-    extern  GLint WIN_WIDTH;
-    extern  GLint WIN_HEIGTH;
-    extern  float NEAR;
-    extern  float FAR;
+    extern GLint WIN_WIDTH;
+    extern GLint WIN_HEIGTH;
+    extern float CAMERA_TRANSLATE_SPEED;
+    extern float NEAR;
+    extern float FAR;
 // Plus tard pour gérer des mouvements, pour la trajectoire surement
 // float TIME;
 

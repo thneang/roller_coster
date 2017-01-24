@@ -4,8 +4,6 @@
 #include <glimac/Geometry.hpp>
 #include <Drawable.hpp>
 
-using namespace glimac;
-
 class Vehicle : public Drawable {
 
 private :
@@ -14,7 +12,7 @@ private :
 
 public :
 
-    void init(const FilePath& filepath = nullptr);
+    void init(const glimac::FilePath& filepath = nullptr);
 
     void init_texture();
 

@@ -2,9 +2,11 @@
 #include <GL/glew.h>
 #include <iostream>
 #include <World.hpp>
-
+#include <TrackballCamera.hpp>
 using namespace glimac;
-
+using namespace global;
+using namespace std;
+using namespace glm;
 int main(int argc, char** argv) {
     // Initialize SDL and open a window
     SDLWindowManager windowManager(800, 600, "GLImac");
@@ -26,14 +28,15 @@ int main(int argc, char** argv) {
      * HERE SHOULD COME THE INITIALIZATION CODE
      *********************************/
 
-//    Environnement environnement;
+    TrackballCamera camera;
     World world;
     world.init(applicationPath);
 
     // Application loop:
-    ivec2 mouse = windowManager.getMousePosition();
     bool done = false;
     while(!done) {
+        MVMatrix = camera.getViewMatrix();
+        mat4 NormalMatrix = transpose(inverse(MVMatrix));
         //utiliser pour avancer le véhicule
         float time = windowManager.getTime();
         // Event loop:
@@ -56,15 +59,24 @@ int main(int argc, char** argv) {
                 cout << time << endl;
                 //véhicule arret/marche
             }
-            ivec2 new_mouse = windowManager.getMousePosition();
-            int diff_x = new_mouse.x - mouse.x;
-            int diff_y = new_mouse.y - mouse.y;
-            /*(diff_x != 0 || diff_y != 0) &&*/
-            if(windowManager.isKeyPressed(SDLK_r)){
-                vec2 rotate = {diff_x,diff_y};
-                world.rotateCamera(rotate);
+            if(windowManager.isMouseButtonPressed(SDL_BUTTON_WHEELUP)) {
+                camera.moveFront(CAMERA_TRANSLATE_SPEED);
+                cout << camera.m_fDistance << endl;
             }
-            mouse = windowManager.getMousePosition();
+            if(windowManager.isMouseButtonPressed(SDL_BUTTON_WHEELDOWN)) {
+                camera.moveFront(-CAMERA_TRANSLATE_SPEED);
+                cout << camera.m_fDistance << endl;
+
+            }
+            if(windowManager.isMouseButtonPressed(SDL_BUTTON_RIGHT)) {
+                ivec2 mouse = windowManager.getMousePosition();
+                ivec2 new_mouse = windowManager.getMousePosition();
+                int diff_x = new_mouse.x - mouse.x;
+                int diff_y = new_mouse.y - mouse.y;
+                /*(diff_x != 0 || diff_y != 0) &&*/
+                mouse = windowManager.getMousePosition();
+            }
+
         }
 
         /*********************************
