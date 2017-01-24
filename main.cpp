@@ -36,6 +36,7 @@ int main(int argc, char** argv) {
     // Application loop:
     bool done = false;
     ivec2 mouse = windowManager.getMousePosition();
+    float old_time =0.0f;
     while(!done) {
         // Mets a jour les matrices du monde
         MVMatrix = camera.getViewMatrix();
@@ -87,17 +88,20 @@ int main(int argc, char** argv) {
             if(windowManager.isMouseButtonPressed(SDL_BUTTON_RIGHT)) {
 //                cout << "Right" << endl;
                 // permet de garder la souris dans la fenetre
-                SDL_WM_GrabInput(SDL_GRAB_ON);
-                // cache la souris
-                SDL_ShowCursor(0);
-                // TODO fixer la souris a sa position, il y a une fonction pour ça.
-                ivec2 new_mouse = windowManager.getMousePosition();
-                int diff_x = new_mouse.x - mouse.x;
-                int diff_y = new_mouse.y - mouse.y;
-                /*(diff_x != 0 || diff_y != 0) &&*/
-                if((diff_x != 0 || diff_y != 0))
-                camera.rotateLeft(diff_x);
-                camera.rotateUp(diff_y);
+                if(time - old_time > 0.02f){
+                    old_time = time;
+                    SDL_WM_GrabInput(SDL_GRAB_ON);
+                    // cache la souris
+                    SDL_ShowCursor(0);
+                    // TODO fixer la souris a sa position, il y a une fonction pour ça.
+                    ivec2 new_mouse = windowManager.getMousePosition();
+                    int diff_x = new_mouse.x - mouse.x;
+                    int diff_y = new_mouse.y - mouse.y;
+                    /*(diff_x != 0 || diff_y != 0) &&*/
+                    if((diff_x != 0 || diff_y != 0))
+                        camera.rotateLeft(diff_x);
+                    camera.rotateUp(diff_y);
+                }
                 mouse = windowManager.getMousePosition();
             }
             SDL_ShowCursor(1);
