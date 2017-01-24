@@ -13,7 +13,7 @@ private:
     std::vector<glm::vec3> list_point;
 
 public:
-    vec3 getPointCurve(float time);
+    glm::vec3 getPointCurve(float time);
 
     void init(const FilePath&);
 

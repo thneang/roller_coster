@@ -27,7 +27,7 @@ public :
 
     void draw();
 
-    void roll(vec3 direction);
+    void roll(glm::vec3 direction);
 
     void free();
 };

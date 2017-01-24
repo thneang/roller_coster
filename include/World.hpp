@@ -3,6 +3,7 @@
 
 #include <Vehicle.hpp>
 #include <Environnement.hpp>
+#include <RollPath.hpp>
 
 class World : public Drawable {
 
@@ -10,6 +11,7 @@ private :
     // TODO Pouvoir faire un array de drawable pour mettre tout nos éléments
 //    Environnement environnement;
     Vehicle vehicle;
+    RollPath roll_path;
 public :
 
     void init(const glimac::FilePath& filepath = nullptr);
@@ -23,6 +25,8 @@ public :
     void translate(glm::vec3 v);
 
     void scale(glm::vec3 v);
+
+    void roll(float time);
 
     void free();
 };
