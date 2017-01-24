@@ -15,7 +15,7 @@ glm::vec3 RollPath::getPointCurve(float time){
     vec3 p1 = list_point[(glm::floatBitsToInt(time)+1) % 5000];
     vec3 p2 = list_point[(glm::floatBitsToInt(time)+2) % 5000];
     vec3 p3 = list_point[(glm::floatBitsToInt(time)+3) % 5000];
-    return p0*(1-t)*(1-t)*(1-t)+3*p1*t*(1-t)*(1-t)+3*p2*t*t*(1-t)+p3*t*t*t;
+    return p0*(1-t)*(1-t)*(1-t)+3.0f*p1*t*(1-t)*(1-t)+3.0f*p2*t*t*(1-t)+p3*t*t*t;
 }
 
 void RollPath::init(const FilePath&){
