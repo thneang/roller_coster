@@ -14,6 +14,7 @@ namespace global {
     extern GLint WIN_WIDTH;
     extern GLint WIN_HEIGTH;
     extern float CAMERA_TRANSLATE_SPEED;
+    extern float CAMERA_ANGLE_SPEED;
     extern float NEAR;
     extern float FAR;
 // Plus tard pour gérer des mouvements, pour la trajectoire surement

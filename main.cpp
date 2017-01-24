@@ -35,6 +35,7 @@ int main(int argc, char** argv) {
     // Application loop:
     bool done = false;
     while(!done) {
+        // Mets a jour les matrices du monde
         MVMatrix = camera.getViewMatrix();
         mat4 NormalMatrix = transpose(inverse(MVMatrix));
         //utiliser pour avancer le véhicule
@@ -42,6 +43,9 @@ int main(int argc, char** argv) {
         // Event loop:
         SDL_Event e;
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        // po
+        int x,y =0 ;
         while(windowManager.pollEvent(e)) {
             if(e.type == SDL_QUIT) {
                 done = true; // Leave the loop after this iteration
@@ -61,21 +65,41 @@ int main(int argc, char** argv) {
             }
             if(windowManager.isMouseButtonPressed(SDL_BUTTON_WHEELUP)) {
                 camera.moveFront(CAMERA_TRANSLATE_SPEED);
-                cout << camera.m_fDistance << endl;
             }
             if(windowManager.isMouseButtonPressed(SDL_BUTTON_WHEELDOWN)) {
                 camera.moveFront(-CAMERA_TRANSLATE_SPEED);
-                cout << camera.m_fDistance << endl;
 
             }
-            if(windowManager.isMouseButtonPressed(SDL_BUTTON_RIGHT)) {
-                ivec2 mouse = windowManager.getMousePosition();
-                ivec2 new_mouse = windowManager.getMousePosition();
-                int diff_x = new_mouse.x - mouse.x;
-                int diff_y = new_mouse.y - mouse.y;
-                /*(diff_x != 0 || diff_y != 0) &&*/
-                mouse = windowManager.getMousePosition();
+            if(windowManager.isKeyPressed(SDLK_LEFT)) {
+                camera.rotateLeft(CAMERA_ANGLE_SPEED);
             }
+            if(windowManager.isKeyPressed(SDLK_RIGHT)) {
+                camera.rotateLeft(-CAMERA_ANGLE_SPEED);
+            }
+            if(windowManager.isKeyPressed(SDLK_UP)) {
+                camera.rotateUp(CAMERA_ANGLE_SPEED);
+            }
+            if(windowManager.isKeyPressed(SDLK_DOWN)) {
+                camera.rotateUp(-CAMERA_ANGLE_SPEED);
+            }
+            // TODO plus tard gérer le click droit, ne pas utiliser getMouseposition mais gérer avec les mouvements de la souris
+            if(windowManager.isMouseButtonPressed(SDL_BUTTON_RIGHT)) {
+//                cout << "Right" << endl;
+                // permet de garder la souris dans la fenetre
+//                SDL_WM_GrabInput(SDL_GRAB_ON);
+                // cache la souris
+//                SDL_ShowCursor(0);
+                // TODO fixer la souris a sa position, il y a une fonction pour ça.
+//                ivec2 mouse = windowManager.getMousePosition();
+//                ivec2 new_mouse = windowManager.getMousePosition();
+//                int diff_x = new_mouse.x - mouse.x;
+//                int diff_y = new_mouse.y - mouse.y;
+                /*(diff_x != 0 || diff_y != 0) &&*/
+//                mouse = windowManager.getMousePosition();
+            }
+//            SDL_ShowCursor(1);
+//            SDL_WM_GrabInput(SDL_GRAB_OFF);
+
 
         }
 
