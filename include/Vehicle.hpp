@@ -1,5 +1,5 @@
-#ifndef ROLLER_COSTER_ENVIRONNEMENT_HPP
-#define ROLLER_COSTER_ENVIRONNEMENT_HPP
+#ifndef ROLLER_COSTER_VEHICLE_HPP
+#define ROLLER_COSTER_VEHICLE_HPP
 
 #include <glimac/Geometry.hpp>
 #include <Drawable.hpp>
@@ -27,10 +27,10 @@ public :
 
     void draw();
 
-    void roll(glm::vec3 direction);
+    void roll(Geometry::Vertex direction);
 
     void free();
 };
 
 
-#endif //ROLLER_COSTER_ENVIRONNEMENT_HPP
+#endif //ROLLER_COSTER_VEHICLE_HPP

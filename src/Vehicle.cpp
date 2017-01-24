@@ -77,7 +77,6 @@ void Vehicle::duplicate_vertex() {
         };
 
 
-
         // On a un tableau d'indice qui sont les indices (dans le tableaux des vertexs) des sommets qui forme la figure
         m_VertexBuffer.push_back(tmp);
 
@@ -203,8 +202,8 @@ void Vehicle::draw() {
     glBindVertexArray(0);
 }
 
-void Vehicle::roll(vec3 v){
-    vec3 vec_trans = v-vehicle.getVertexBuffer()->m_Position;
+void Vehicle::roll(Geometry::Vertex v){
+    vec3 vec_trans = v.m_Position-vehicle.getVertexBuffer()->m_Position;
     translate(vec_trans);
 }
 

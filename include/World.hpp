@@ -9,7 +9,7 @@ class World : public Drawable {
 
 private :
     // TODO Pouvoir faire un array de drawable pour mettre tout nos éléments
-//    Environnement environnement;
+    Environnement environnement;
     Vehicle vehicle;
     RollPath roll_path;
 public :
