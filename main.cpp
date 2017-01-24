@@ -37,15 +37,14 @@ int main(int argc, char** argv) {
     while(!done) {
         // Mets a jour les matrices du monde
         MVMatrix = camera.getViewMatrix();
-        mat4 NormalMatrix = transpose(inverse(MVMatrix));
+        NormalMatrix = transpose(inverse(MVMatrix));
         //utiliser pour avancer le véhicule
         float time = windowManager.getTime();
         // Event loop:
         SDL_Event e;
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // po
-        int x,y =0 ;
+
         while(windowManager.pollEvent(e)) {
             if(e.type == SDL_QUIT) {
                 done = true; // Leave the loop after this iteration

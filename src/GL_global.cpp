@@ -9,7 +9,7 @@ namespace global {
     const GLint VERTEX_ATTRIB_TEXTURE_COORD_SIZE = 2;
     GLint WIN_WIDTH = 800;
     GLint WIN_HEIGTH = 600;
-    float CAMERA_TRANSLATE_SPEED = 2.0f;
+    float CAMERA_TRANSLATE_SPEED = 5.0f;
     float CAMERA_ANGLE_SPEED = 10.0f;
     float NEAR = 0.1f;
     float FAR = 99999.f;
