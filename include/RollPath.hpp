@@ -10,10 +10,10 @@ using namespace glimac;
 
 class RollPath : public Drawable{
 private:
-    std::vector<glm::vec3> list_point;
+    std::vector<Geometry::Vertex> list_point;
 
 public:
-    glm::vec3 getPointCurve(float time);
+    Geometry::Vertex getPointCurve(float time);
 
     void init(const FilePath&);
 

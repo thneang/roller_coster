@@ -79,17 +79,16 @@ int main(int argc, char** argv) {
                 camera.rotateLeft(-CAMERA_ANGLE_SPEED);
             }
             if(windowManager.isKeyPressed(SDLK_UP)) {
-                camera.rotateUp(CAMERA_ANGLE_SPEED);
+                camera.rotateUp(-CAMERA_ANGLE_SPEED);
             }
             if(windowManager.isKeyPressed(SDLK_DOWN)) {
-                camera.rotateUp(-CAMERA_ANGLE_SPEED);
+                camera.rotateUp(CAMERA_ANGLE_SPEED);
             }
             // TODO plus tard gérer le click droit, ne pas utiliser getMouseposition mais gérer avec les mouvements de la souris
             if(windowManager.isMouseButtonPressed(SDL_BUTTON_RIGHT)) {
 //                cout << "Right" << endl;
                 // permet de garder la souris dans la fenetre
                 if(time - old_time > 0.02f){
-                    old_time = time;
                     SDL_WM_GrabInput(SDL_GRAB_ON);
                     // cache la souris
                     SDL_ShowCursor(0);
@@ -101,6 +100,7 @@ int main(int argc, char** argv) {
                     if((diff_x != 0 || diff_y != 0))
                         camera.rotateLeft(diff_x);
                     camera.rotateUp(diff_y);
+                    old_time = time;
                 }
                 mouse = windowManager.getMousePosition();
             }
