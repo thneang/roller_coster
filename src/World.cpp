@@ -1,15 +1,16 @@
 #include <World.hpp>
-#include <zconf.h>
 
 using namespace global;
+using namespace glm;
+using namespace glimac;
 
 void World::init(const FilePath& filepath) {
 //    environnement.init(filepath);
     vehicle.init(filepath);
     roll_path.init(filepath);
     // J'ai déplacé le monde très loin pour avoir une vue global
-    translate(vec3(0.0f,0.0f,-1000.0f));
-    rotate(90.0f,vec3(0.0f,1.0f,0.0f));
+//    translate(vec3(0.0f,0.0f,-1000.0f));
+//    rotate(90.0f,vec3(0.0f,1.0f,0.0f));
 }
 
 void World::draw() {

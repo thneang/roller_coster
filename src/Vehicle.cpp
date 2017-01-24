@@ -4,11 +4,16 @@
 using namespace glimac;
 using namespace std;
 using namespace global;
+using namespace glm;
 
 void Vehicle::init(const FilePath& applicationPath) {
+    // ATTENTION bien vérifier le PATH pour material si c'est pas chargé.
+    // Faire la vérif pour la ligne mtllib dans le fichier OBJ ET dans le code
+    // avec mtllib du fichier OBJ mettre /nom_du_mtl
+    // dans l'appel loadOBJ mettre repertoire mtl mais pas le fichier mtl
     this->vehicle.loadOBJ(
             applicationPath.dirPath() + "assets/3D_models/Vehicle/vehicle.obj",
-            applicationPath.dirPath() + "assets/3D_models/Vehicle/vehicle.mtl",
+            applicationPath.dirPath() + "assets/3D_models/Vehicle/",
             true
     );
 
@@ -122,7 +127,7 @@ void Vehicle::init_index() {
     // Generate a buffer for the indices
     glGenBuffers(vehicle.getMeshCount(), elements);
 
-    for (int i = 0; i < vehicle.getMeshCount(); ++i) {
+    for (unsigned int i = 0; i < vehicle.getMeshCount(); ++i) {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elements[i]);
 
         glBufferData(
@@ -170,10 +175,10 @@ void Vehicle::draw() {
 //    glUniform1i(uTextureId, 0);
 
 
-    for (int i = 0; i < vehicle.getMeshCount(); ++i) {
+    for (unsigned int i = 0; i < vehicle.getMeshCount(); ++i) {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elements[i]);
 
-        mat4 ProjMatrixVehicle = ProjMatrix * ProjMatrixMul;
+        mat4 ProjMatrixVehicle = ProjMatrix * MVMatrix * ProjMatrixMul;
         mat4 NormalMatrixVehicle = NormalMatrix * NormalMatrixMul;
         glUniformMatrix4fv(uMVPMatrixId, 1, GL_FALSE, value_ptr(ProjMatrixVehicle));
         glUniformMatrix4fv(uMVMatrixId, 1, GL_FALSE, value_ptr(MVMatrix));

@@ -1,10 +1,12 @@
 #include <Environnement.hpp>
-#include <zconf.h>
+#include <GL/glew.h>
+#include <GL_global.hpp>
+#include <glimac/Program.hpp>
 
 using namespace glimac;
 using namespace std;
 using namespace global;
-
+using  namespace glm;
 // TODO On peut peut-être généraliser pour tout dessiner avec le meme code
 void Environnement::init(const FilePath& applicationPath) {
     this->environnement.loadOBJ(
@@ -161,7 +163,7 @@ void Environnement::draw() {
 //    mat4 translate = glm::translate(MVMatrix, vec3(0.0f,-15.0f,0.0f));
 //    TIME += 1;
 
-    glUniformMatrix4fv(uMVPMatrixId, 1, GL_FALSE, value_ptr(ProjMatrix));
+    glUniformMatrix4fv(uMVPMatrixId, 1, GL_FALSE, value_ptr(ProjMatrix * MVMatrix));
     glUniformMatrix4fv(uMVMatrixId, 1, GL_FALSE, value_ptr(MVMatrix));
     glUniformMatrix4fv(uNormalMatrixId, 1, GL_FALSE, value_ptr(NormalMatrix));
 

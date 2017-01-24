@@ -7,10 +7,6 @@
 #include <iostream>
 #include <glimac/Geometry.hpp>
 
-using namespace glm;
-using namespace glimac;
-using namespace std;
-
 class Drawable {
 protected :
 
@@ -26,15 +22,15 @@ protected :
 
     // Le buffer qui contient nos vertex, une duplication de sommets importé est nécessaire pour appliquer des textures
     // on fait cela car un meme vertex ne peut pas avoir plusieurs coordonnée de texture;
-    std::vector<Geometry::Vertex> m_VertexBuffer;
+    std::vector<glimac::Geometry::Vertex> m_VertexBuffer;
 
 
     // Nos images utilisé par les textures
     // TODO passer en pointeur pour plusieurs textures
-    unique_ptr<Image> images[1];
+    std::unique_ptr<glimac::Image> images[1];
 
     // Program pour utiliser les shaders
-    Program program;
+    glimac::Program program;
 
     GLint uTextureId;
 
@@ -45,17 +41,17 @@ protected :
 
     GLint uNormalMatrixId;
 
-    mat4 ProjMatrixMul;
+    glm::mat4 ProjMatrixMul;
 
-    mat4 MVMatrixMul;
+    glm::mat4 MVMatrixMul;
 
-    mat4 NormalMatrixMul;
+    glm::mat4 NormalMatrixMul;
 
     /******************************************************************************************************************/
 
 public :
     // Init l'objet (allocation), envoie les données au gpu et demarre un programme pour les shaders
-    virtual void init(const FilePath& filepath = nullptr) = 0;
+    virtual void init(const glimac::FilePath& filepath = nullptr) = 0;
 
     // envoie l'image au gpu
     virtual void init_texture() {};
@@ -82,20 +78,20 @@ public :
     // libere l'espace allouée, doit être appelé à la fin du programme
     virtual void free() = 0;
 
-    virtual void rotate(float angle,vec3 v){
+    virtual void rotate(float angle,glm::vec3 v){
         MVMatrixMul = glm::rotate(global::MVMatrix,angle,v);
         ProjMatrixMul *= MVMatrixMul;
         NormalMatrixMul *= MVMatrixMul;
     }
 
-    virtual void translate(vec3 v){
-        mat4 translate = glm::translate(global::MVMatrix,v);
+    virtual void translate(glm::vec3 v){
+        glm::mat4 translate = glm::translate(global::MVMatrix,v);
         ProjMatrixMul *= translate;
         NormalMatrixMul *= translate;
     }
 
-    virtual void scale(vec3 v){
-        mat4 scale = glm::scale(global::MVMatrix,v);
+    virtual void scale(glm::vec3 v){
+        glm::mat4 scale = glm::scale(global::MVMatrix,v);
         ProjMatrixMul *= scale;
         NormalMatrixMul *= scale;
     }
