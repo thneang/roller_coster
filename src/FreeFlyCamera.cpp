@@ -26,11 +26,11 @@ float FreeFlyCamera::rotateLeft(float degrees) {
     return m_fPhi;
 }
 float FreeFlyCamera::rotateUp(float degrees) {
-    if(m_fTheta + radians(degrees * sensitivity) > 45){
-        m_fTheta = 45.0f;
+    if(m_fTheta + radians(degrees * sensitivity) > M_PI/2){
+        m_fTheta = M_PI/2;
     }
-    else if(m_fTheta + radians(degrees * sensitivity) < -45){
-        m_fTheta = -45.0f;
+    else if(m_fTheta + radians(degrees * sensitivity) < -M_PI/2){
+        m_fTheta = -M_PI/2;
     }
     else{
         m_fTheta += radians(degrees * sensitivity);
