@@ -3,7 +3,6 @@
 #include <iostream>
 #include <World.hpp>
 #include <FreeFlyCamera.hpp>
-#include <SDL2/>
 using namespace glimac;
 using namespace global;
 using namespace std;
