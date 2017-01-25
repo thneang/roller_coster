@@ -182,7 +182,7 @@ void Environnement::draw() {
     vec3 distance = environnement.getVertexBuffer()[1].m_Position - environnement.getVertexBuffer()[0].m_Position;
     mat4 translateV = glm::translate(MatrixID, distance);
     for (int i = 0; i < 8; ++i) {
-        mat4 translateH = glm::translate(translateV, distance * vec3(0.0f, 0.0f, (float)i));
+        mat4 translateH = glm::translate(translateV, distance * vec3((float) i, 0.0f, 0.0f));
         glUniformMatrix4fv(uMVPMatrixId, 1, GL_FALSE, value_ptr(ProjMatrix * MVMatrix * translateH));
         glUniformMatrix4fv(uMVMatrixId, 1, GL_FALSE, value_ptr(MVMatrix));
         glUniformMatrix4fv(uNormalMatrixId, 1, GL_FALSE, value_ptr(NormalMatrix * translateH));

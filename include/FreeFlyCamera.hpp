@@ -3,21 +3,18 @@
 
 #include <cmath>
 #include <glimac/glm.hpp>
-
-class FreeFlyCamera {
-public:
-    glm::vec3 m_Position;
-    float m_fPhi;
-    float m_fTheta;
-    glm::vec3 m_FrontVector;
-    glm::vec3 m_LeftVector;
-    glm::vec3 m_UpVector;
-    float sensitivity;
+#include <Camera.hpp>
+class FreeFlyCamera : public Camera{
+private:
 
     void computeDirectionVectors();
 
 public:
-    FreeFlyCamera() : m_Position(glm::vec3(0.0f,5.0f,0.0f)), m_fPhi(M_PI), m_fTheta(0.0f) ,sensitivity(0.3f) {
+    FreeFlyCamera() {
+        m_Position = glm::vec3(0.0f,25.0f,0.0f);
+        m_fPhi= M_PI;
+        m_fTheta = 0.0f;
+        sensitivity = 0.3f;
         computeDirectionVectors();
     }
     void moveLeft(float t);

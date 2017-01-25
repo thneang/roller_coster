@@ -3,6 +3,8 @@
 #include <iostream>
 #include <World.hpp>
 #include <FreeFlyCamera.hpp>
+#include <TrackballCamera.hpp>
+
 using namespace glimac;
 using namespace global;
 using namespace std;
@@ -27,8 +29,10 @@ int main(int argc, char** argv) {
     /*********************************
      * HERE SHOULD COME THE INITIALIZATION CODE
      *********************************/
-
-    FreeFlyCamera camera;
+    static bool GLOBAL = true;
+    TrackballCamera trackballCamera;
+    FreeFlyCamera freeFlyCamera;
+    Camera *camera = &trackballCamera;
     World world;
     world.init(applicationPath);
 
@@ -36,7 +40,7 @@ int main(int argc, char** argv) {
     bool done = false;
     while(!done) {
         // Mets a jour les matrices du monde
-        MVMatrix = camera.getViewMatrix();
+        MVMatrix = camera->getViewMatrix();
         NormalMatrix = transpose(inverse(MVMatrix));
         //utiliser pour avancer le véhicule
         float time = windowManager.getTime();
@@ -57,6 +61,13 @@ int main(int argc, char** argv) {
             }
             if(windowManager.isKeyPressed(SDLK_c)){
                 //caméra global/centré
+                if (GLOBAL) {
+                    camera = &freeFlyCamera;
+                    GLOBAL = false;
+                } else {
+                    camera = &trackballCamera;
+                    GLOBAL = true;
+                }
             }
             if(windowManager.isKeyPressed(SDLK_s)){
                 cout << time << endl;
@@ -64,25 +75,22 @@ int main(int argc, char** argv) {
             }
 
             if(windowManager.isKeyPressed(SDLK_LEFT)) {
-                camera.moveLeft(CAMERA_TRANSLATE_SPEED);
+                camera->moveLeft(CAMERA_TRANSLATE_SPEED);
             }
             if(windowManager.isKeyPressed(SDLK_RIGHT)) {
-                camera.moveLeft(-CAMERA_TRANSLATE_SPEED);
+                camera->moveLeft(-CAMERA_TRANSLATE_SPEED);
             }
             if(windowManager.isKeyPressed(SDLK_UP)) {
-                camera.moveFront(CAMERA_TRANSLATE_SPEED);
+                camera->moveFront(CAMERA_TRANSLATE_SPEED);
             }
             if(windowManager.isKeyPressed(SDLK_DOWN)) {
-                camera.moveFront(-CAMERA_ANGLE_SPEED);
+                camera->moveFront(-CAMERA_ANGLE_SPEED);
             }
             if(windowManager.isMouseButtonPressed(SDL_BUTTON_RIGHT)) {
                 SDL_WM_GrabInput(SDL_GRAB_ON);
                 if(e.type == SDL_MOUSEMOTION) {
-                    cout << "motion" << endl;
-                    cout << camera.m_fPhi << endl;
-                    cout << camera.m_fTheta << endl;
-                    camera.rotateUp(e.motion.yrel);
-                    camera.rotateLeft(e.motion.xrel);
+                    camera->rotateUp(e.motion.yrel);
+                    camera->rotateLeft(e.motion.xrel);
                 }
             }
             SDL_WM_GrabInput(SDL_GRAB_OFF);

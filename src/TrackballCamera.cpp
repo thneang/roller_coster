@@ -9,7 +9,7 @@ void TrackballCamera::rotateLeft(float degrees) {
 void TrackballCamera::rotateUp(float degrees) {
     m_fAngleX += degrees;
 }
-glm::mat4 TrackballCamera::getViewMatrix() const {
+glm::mat4 TrackballCamera::getViewMatrix() {
     glm::mat4 VMatrix;
     VMatrix *= glm::translate(VMatrix, glm::vec3(0.0f, 0.0f, m_fDistance));
     VMatrix *= glm::rotate(VMatrix, glm::radians(m_fAngleX), glm::vec3(1.0f,0.0f,0.0f));

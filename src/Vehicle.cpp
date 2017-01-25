@@ -176,8 +176,9 @@ void Vehicle::draw() {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elements[i]);
 
         mat4 scale = glm::scale(MatrixID, vec3(0.1f, 0.1f, 0.1f));
+        mat4 rotate = glm::rotate(MatrixID, 90.0f, vec3(0.0f, -1.0f, 0.0f));
 
-        MVMatrixMul = MVMatrix * scale;
+        MVMatrixMul = MVMatrix * scale * rotate;
         NormalMatrixMul = transpose(MVMatrixMul);
 
         glUniformMatrix4fv(uMVPMatrixId, 1, GL_FALSE, value_ptr(ProjMatrix * MVMatrixMul));
