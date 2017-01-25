@@ -3,11 +3,22 @@
 void TrackballCamera::moveFront(float delta) {
     m_fDistance += delta;
 }
-void TrackballCamera::rotateLeft(float degrees) {
+float TrackballCamera::rotateLeft(float degrees) {
+
     m_fAngleY += degrees;
+    return m_fAngleY;
 }
-void TrackballCamera::rotateUp(float degrees) {
-    m_fAngleX += degrees;
+float TrackballCamera::rotateUp(float degrees) {
+    if(m_fAngleX+degrees > 45){
+        m_fAngleX = 45.0f;
+    }
+    else if(m_fAngleX+degrees < -45){
+        m_fAngleX = -45.0f;
+    }
+    else{
+        m_fAngleX += degrees;
+    }
+    return m_fAngleX;
 }
 glm::mat4 TrackballCamera::getViewMatrix() {
     glm::mat4 VMatrix;

@@ -17,8 +17,8 @@ protected:
 public:
     virtual void moveLeft(float t){};
     virtual void moveFront(float t){};
-    virtual void rotateLeft(float degrees){};
-    virtual void rotateUp(float degrees){};
+    virtual float rotateLeft(float degrees){return 0.0f;};
+    virtual float rotateUp(float degrees){return 0.0f;};
 
     virtual glm::mat4 getViewMatrix(){
         glm::mat4 res;

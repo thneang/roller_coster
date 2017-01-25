@@ -21,11 +21,21 @@ void FreeFlyCamera::moveFront(float t) {
     m_Position += t * m_FrontVector;
 }
 
-void FreeFlyCamera::rotateLeft(float degrees) {
+float FreeFlyCamera::rotateLeft(float degrees) {
     m_fPhi += radians(degrees * sensitivity);
+    return m_fPhi;
 }
-void FreeFlyCamera::rotateUp(float degrees) {
-    m_fTheta += radians(degrees * sensitivity);
+float FreeFlyCamera::rotateUp(float degrees) {
+    if(m_fTheta + radians(degrees * sensitivity) > 45){
+        m_fTheta = 45.0f;
+    }
+    else if(m_fTheta + radians(degrees * sensitivity) < -45){
+        m_fTheta = -45.0f;
+    }
+    else{
+        m_fTheta += radians(degrees * sensitivity);
+    }
+    return m_fTheta;
 }
 
 glm::mat4 FreeFlyCamera::getViewMatrix() {

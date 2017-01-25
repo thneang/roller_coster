@@ -37,7 +37,6 @@ int main(int argc, char** argv) {
     Camera *camera = &trackballCamera;
     World world;
     world.init(applicationPath);
-
     // Application loop:
     bool done = false;
     while(!done) {
