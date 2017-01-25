@@ -12,14 +12,14 @@ using namespace global;
 
 Geometry::Vertex RollPath::getPointCurve(float time){
     float t = time - glm::floatBitsToInt(time);
-    vec3 p0 = list_point[glm::floatBitsToInt(time) % 5000].m_Position;
-    vec3 p1 = list_point[(glm::floatBitsToInt(time)+1) % 5000].m_Position;
-    vec3 p2 = list_point[(glm::floatBitsToInt(time)+2) % 5000].m_Position;
-    vec3 p3 = list_point[(glm::floatBitsToInt(time)+3) % 5000].m_Position;
+    vec3 p0 = m_vertex_buffer[glm::floatBitsToInt(time) % 5000].m_Position;
+    vec3 p1 = m_vertex_buffer[(glm::floatBitsToInt(time)+1) % 5000].m_Position;
+    vec3 p2 = m_vertex_buffer[(glm::floatBitsToInt(time)+2) % 5000].m_Position;
+    vec3 p3 = m_vertex_buffer[(glm::floatBitsToInt(time)+3) % 5000].m_Position;
     vec3 pos = p0*(1-t)*(1-t)*(1-t)+3.0f*p1*t*(1-t)*(1-t)+3.0f*p2*t*t*(1-t)+p3*t*t*t;
     Geometry::Vertex v;
     v.m_Position = pos;
-    v.m_TexCoords = list_point[0].m_TexCoords;
+    v.m_TexCoords = m_vertex_buffer[0].m_TexCoords;
     v.m_Normal = pos;
     return v;
 }
@@ -31,7 +31,7 @@ void RollPath::init(const FilePath& applicationPath){
         v.m_Position= pos;
         v.m_Normal = pos;
         v.m_TexCoords = vec2(i/12,0.5);
-        list_point.push_back(v);
+        m_vertex_buffer.push_back(v);
     }
     for(int i=6, j=6;i>0;i--,j++){
         vec3 pos = vec3(std::log(j)*300,std::log(i)*300,std::log(j)*300);
@@ -39,7 +39,7 @@ void RollPath::init(const FilePath& applicationPath){
         v.m_Position= pos;
         v.m_Normal = pos;
         v.m_TexCoords = vec2(j/12,0.5);
-        list_point.push_back(v);
+        m_vertex_buffer.push_back(v);
     }
 
     program = loadProgram(applicationPath.dirPath() + "shaders/RollPath.vs.glsl",
@@ -89,7 +89,7 @@ void RollPath::init_vbo(){
 
     // Envoie les donnés
     // version pour utiliser drawElement
-    glBufferData(GL_ARRAY_BUFFER, this->list_point.size()*sizeof(Geometry::Vertex), &this->list_point[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, this->m_vertex_buffer.size()*sizeof(Geometry::Vertex), &this->m_vertex_buffer[0], GL_STATIC_DRAW);
 
 //    glBufferData(GL_ARRAY_BUFFER, m_VertexBuffer.size() * sizeof(Geometry::Vertex), m_VertexBuffer.data(), GL_STATIC_DRAW);
 

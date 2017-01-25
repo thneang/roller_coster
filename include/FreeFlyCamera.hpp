@@ -13,12 +13,11 @@ public:
     glm::vec3 m_LeftVector;
     glm::vec3 m_UpVector;
     float sensitivity;
-    float speed;
 
     void computeDirectionVectors();
 
 public:
-    FreeFlyCamera() : m_Position(glm::vec3(0.0f,0.0f,0.0f)), m_fPhi(M_PI), m_fTheta(0.0f), speed(2.0f) ,sensitivity(0.3f) {
+    FreeFlyCamera() : m_Position(glm::vec3(0.0f,0.0f,0.0f)), m_fPhi(M_PI), m_fTheta(0.0f) ,sensitivity(0.3f) {
         computeDirectionVectors();
     }
     void moveLeft(float t);
