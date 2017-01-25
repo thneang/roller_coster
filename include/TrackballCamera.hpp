@@ -4,7 +4,7 @@
 #include <GL_global.hpp>
 
 class TrackballCamera{
-public:
+private:
     float m_fDistance;
     float m_fAngleX;
     float m_fAngleY;

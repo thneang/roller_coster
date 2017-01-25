@@ -2,8 +2,8 @@
 #include <GL/glew.h>
 #include <iostream>
 #include <World.hpp>
-#include <TrackballCamera.hpp>
-
+#include <FreeFlyCamera.hpp>
+#include <SDL2/>
 using namespace glimac;
 using namespace global;
 using namespace std;
@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
      * HERE SHOULD COME THE INITIALIZATION CODE
      *********************************/
 
-    TrackballCamera camera;
+    FreeFlyCamera camera;
     World world;
     world.init(applicationPath);
 
@@ -88,21 +88,27 @@ int main(int argc, char** argv) {
             if(windowManager.isMouseButtonPressed(SDL_BUTTON_RIGHT)) {
 //                cout << "Right" << endl;
                 // permet de garder la souris dans la fenetre
-                if(time - old_time > 0.02f){
-                    SDL_WM_GrabInput(SDL_GRAB_ON);
-                    // cache la souris
-                    SDL_ShowCursor(0);
-                    // TODO fixer la souris a sa position, il y a une fonction pour ça.
-                    ivec2 new_mouse = windowManager.getMousePosition();
-                    int diff_x = new_mouse.x - mouse.x;
-                    int diff_y = new_mouse.y - mouse.y;
-                    /*(diff_x != 0 || diff_y != 0) &&*/
-                    if((diff_x != 0 || diff_y != 0))
-                        camera.rotateLeft(diff_x);
-                    camera.rotateUp(diff_y);
-                    old_time = time;
+//                if(time - old_time > 0.02f){
+//                    SDL_WM_GrabInput(SDL_GRAB_ON);
+//                     cache la souris
+//                    SDL_ShowCursor(0);
+//                     TODO fixer la souris a sa position, il y a une fonction pour ça.
+//                    ivec2 new_mouse = windowManager.getMousePosition();
+//                    int diff_x = new_mouse.x - mouse.x;
+//                    int diff_y = new_mouse.y - mouse.y;
+//                    /*(diff_x != 0 || diff_y != 0) &&*/
+//                    if((diff_x != 0 || diff_y != 0))
+//                        camera.rotateLeft(diff_x);
+//                    camera.rotateUp(diff_y);
+//                    old_time = time;
+//                }
+//                mouse = windowManager.getMousePosition();
+                SDL_WM_GrabInput(SDL_GRAB_ON);
+                SDL_ShowCursor(0);
+                if(e.type == SDL_MOUSEMOTION) {
+                    camera.rotateUp(e.motion.xrel);
+                    camera.rotateLeft(e.motion.yrel);
                 }
-                mouse = windowManager.getMousePosition();
             }
             SDL_ShowCursor(1);
             SDL_WM_GrabInput(SDL_GRAB_OFF);
