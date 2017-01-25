@@ -18,10 +18,13 @@ namespace global {
 
 /************************ Matrices de reference de la scène, les objets sont tous dessiner par rapport à ça **************************/
 // Modifier ces variables les modifies pour tous les objets Drawable
-// Matrice ID
     mat4 ModelMatrix;
 
-// convention, dessine l'objet vers le négatif de l'axe des Z
+    // Matrice ID
+    mat4 MatrixID;
+
+
+    // convention, dessine l'objet vers le négatif de l'axe des Z
     mat4 ProjMatrix = perspective(radians(70.f), (float)WIN_WIDTH/WIN_HEIGTH, NEAR, FAR);
     mat4 MVMatrix = translate(ModelMatrix, vec3(0.f,0.f,-5.0f));
     mat4 NormalMatrix = transpose(inverse(MVMatrix));

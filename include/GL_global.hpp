@@ -24,6 +24,7 @@ namespace global {
 // Modifier ces variables les modifies pour tous les objets Drawable
 // Matrice ID
     extern  glm::mat4 ModelMatrix;
+    extern glm::mat4 MatrixID;
 
 // convention, dessine l'objet vers le négatif de l'axe des Z
     extern  glm::mat4 ProjMatrix;

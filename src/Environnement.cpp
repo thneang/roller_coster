@@ -154,15 +154,15 @@ void Environnement::draw() {
     uMVMatrixId = glGetUniformLocation(program.getGLId(), "uMVMatrix");
     uNormalMatrixId = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
 
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elements[0]);
+
+
     // donne la texture au shader pour l'appliquer avec draw
     glBindTexture(GL_TEXTURE_2D, texture[0]);
     glUniform1i(uTextureId, 0);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elements[0]);
-
-
 //    mat4 translate = glm::translate(MVMatrix, vec3(0.0f,-15.0f,0.0f));
-//    TIME += 1;
+
 
     glUniformMatrix4fv(uMVPMatrixId, 1, GL_FALSE, value_ptr(ProjMatrix * MVMatrix));
     glUniformMatrix4fv(uMVMatrixId, 1, GL_FALSE, value_ptr(MVMatrix));
@@ -176,6 +176,26 @@ void Environnement::draw() {
             GL_UNSIGNED_INT,   // type
             (void*)0       // element array buffer offset
     );
+
+    // On a un rectangle texturé pour le moment
+    // pour faire le sol on translate ce rectangle et on draw, autant de fois qu'on a besoin pour faire le sol
+    vec3 distance = environnement.getVertexBuffer()[1].m_Position - environnement.getVertexBuffer()[0].m_Position;
+    mat4 translateV = glm::translate(MatrixID, distance);
+    for (int i = 0; i < 8; ++i) {
+        mat4 translateH = glm::translate(translateV, distance * vec3(0.0f, 0.0f, (float)i));
+        glUniformMatrix4fv(uMVPMatrixId, 1, GL_FALSE, value_ptr(ProjMatrix * MVMatrix * translateH));
+        glUniformMatrix4fv(uMVMatrixId, 1, GL_FALSE, value_ptr(MVMatrix));
+        glUniformMatrix4fv(uNormalMatrixId, 1, GL_FALSE, value_ptr(NormalMatrix * translateH));
+//
+//        // Draw the triangles !
+//        // afficher bien la forme grace au index mais texture impossible...
+        glDrawElements(
+                GL_TRIANGLES,      // mode
+                environnement.getIndexCount(),    // count
+                GL_UNSIGNED_INT,   // type
+                (void*)0       // element array buffer offset
+        );
+    }
 
 //    glDrawArrays(GL_TRIANGLES, 0, m_VertexBuffer.size());
 

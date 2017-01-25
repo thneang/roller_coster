@@ -175,11 +175,14 @@ void Vehicle::draw() {
     for (unsigned int i = 0; i < vehicle.getMeshCount(); ++i) {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elements[i]);
 
-        mat4 ProjMatrixVehicle = ProjMatrix * MVMatrix * ProjMatrixMul;
-        mat4 NormalMatrixVehicle = NormalMatrix * NormalMatrixMul;
-        glUniformMatrix4fv(uMVPMatrixId, 1, GL_FALSE, value_ptr(ProjMatrixVehicle));
-        glUniformMatrix4fv(uMVMatrixId, 1, GL_FALSE, value_ptr(MVMatrix));
-        glUniformMatrix4fv(uNormalMatrixId, 1, GL_FALSE, value_ptr(NormalMatrixVehicle));
+        mat4 scale = glm::scale(MatrixID, vec3(0.1f, 0.1f, 0.1f));
+
+        MVMatrixMul = MVMatrix * scale;
+        NormalMatrixMul = transpose(MVMatrixMul);
+
+        glUniformMatrix4fv(uMVPMatrixId, 1, GL_FALSE, value_ptr(ProjMatrix * MVMatrixMul));
+        glUniformMatrix4fv(uMVMatrixId, 1, GL_FALSE, value_ptr(MVMatrixMul));
+        glUniformMatrix4fv(uNormalMatrixId, 1, GL_FALSE, value_ptr(NormalMatrixMul));
 
         // Draw the triangles !
         // afficher bien la forme grace au index mais texture impossible...
