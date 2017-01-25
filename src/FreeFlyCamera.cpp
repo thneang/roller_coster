@@ -28,11 +28,12 @@ void FreeFlyCamera::rotateUp(float degrees) {
     m_fTheta += radians(degrees * sensitivity);
 }
 
-glm::mat4 FreeFlyCamera::getViewMatrix() const {
+glm::mat4 FreeFlyCamera::getViewMatrix() {
     //  glm::lookAt(eye, point, up).
     // Le premier argument est simplement la position de la caméra exprimée dans le monde.
     // Le deuxième argument est un point que la caméra regarde. Le dernier argument est l'axe vertical de la caméra.
 
 //    V=P+F
+    computeDirectionVectors();
     return lookAt(m_Position, m_Position + m_FrontVector, m_UpVector);
 }

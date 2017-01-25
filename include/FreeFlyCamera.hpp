@@ -5,7 +5,7 @@
 #include <glimac/glm.hpp>
 
 class FreeFlyCamera {
-private:
+public:
     glm::vec3 m_Position;
     float m_fPhi;
     float m_fTheta;
@@ -13,11 +13,12 @@ private:
     glm::vec3 m_LeftVector;
     glm::vec3 m_UpVector;
     float sensitivity;
+    float speed;
 
     void computeDirectionVectors();
 
 public:
-    FreeFlyCamera() : m_Position(glm::vec3(0.0f,0.0f,0.0f)), m_fPhi(M_PI), m_fTheta(0.0f), sensitivity(0.3f) {
+    FreeFlyCamera() : m_Position(glm::vec3(0.0f,0.0f,0.0f)), m_fPhi(M_PI), m_fTheta(0.0f), speed(2.0f) ,sensitivity(0.3f) {
         computeDirectionVectors();
     }
     void moveLeft(float t);
@@ -25,7 +26,7 @@ public:
     void rotateLeft(float degrees);
     void rotateUp(float degrees);
 
-    glm::mat4 getViewMatrix() const;
+    glm::mat4 getViewMatrix();
 };
 
 #endif //ROLLER_COSTER_FREEFLYCAMERA_HPP

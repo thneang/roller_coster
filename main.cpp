@@ -64,26 +64,19 @@ int main(int argc, char** argv) {
                 cout << time << endl;
                 //véhicule arret/marche
             }
-            if(windowManager.isMouseButtonPressed(SDL_BUTTON_WHEELUP)) {
-                camera.moveFront(CAMERA_TRANSLATE_SPEED);
-            }
-            if(windowManager.isMouseButtonPressed(SDL_BUTTON_WHEELDOWN)) {
-                camera.moveFront(-CAMERA_TRANSLATE_SPEED);
 
-            }
             if(windowManager.isKeyPressed(SDLK_LEFT)) {
-                camera.rotateLeft(CAMERA_ANGLE_SPEED);
+                camera.moveLeft(CAMERA_TRANSLATE_SPEED);
             }
             if(windowManager.isKeyPressed(SDLK_RIGHT)) {
-                camera.rotateLeft(-CAMERA_ANGLE_SPEED);
+                camera.moveLeft(-CAMERA_TRANSLATE_SPEED);
             }
             if(windowManager.isKeyPressed(SDLK_UP)) {
-                camera.rotateUp(-CAMERA_ANGLE_SPEED);
+                camera.moveFront(CAMERA_TRANSLATE_SPEED);
             }
             if(windowManager.isKeyPressed(SDLK_DOWN)) {
-                camera.rotateUp(CAMERA_ANGLE_SPEED);
+                camera.moveFront(-CAMERA_ANGLE_SPEED);
             }
-            // TODO plus tard gérer le click droit, ne pas utiliser getMouseposition mais gérer avec les mouvements de la souris
             if(windowManager.isMouseButtonPressed(SDL_BUTTON_RIGHT)) {
 //                cout << "Right" << endl;
                 // permet de garder la souris dans la fenetre
@@ -91,7 +84,6 @@ int main(int argc, char** argv) {
 //                    SDL_WM_GrabInput(SDL_GRAB_ON);
 //                     cache la souris
 //                    SDL_ShowCursor(0);
-//                     TODO fixer la souris a sa position, il y a une fonction pour ça.
 //                    ivec2 new_mouse = windowManager.getMousePosition();
 //                    int diff_x = new_mouse.x - mouse.x;
 //                    int diff_y = new_mouse.y - mouse.y;
@@ -103,13 +95,14 @@ int main(int argc, char** argv) {
 //                }
 //                mouse = windowManager.getMousePosition();
                 SDL_WM_GrabInput(SDL_GRAB_ON);
-                SDL_ShowCursor(0);
                 if(e.type == SDL_MOUSEMOTION) {
-                    camera.rotateUp(e.motion.xrel);
-                    camera.rotateLeft(e.motion.yrel);
+                    cout << "motion" << endl;
+                    cout << camera.m_fPhi << endl;
+                    cout << camera.m_fTheta << endl;
+                    camera.rotateUp(e.motion.yrel);
+                    camera.rotateLeft(e.motion.xrel);
                 }
             }
-            SDL_ShowCursor(1);
             SDL_WM_GrabInput(SDL_GRAB_OFF);
 
 
