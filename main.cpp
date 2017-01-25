@@ -4,6 +4,7 @@
 #include <World.hpp>
 #include <FreeFlyCamera.hpp>
 #include <TrackballCamera.hpp>
+#include <GL/glut.h>
 
 using namespace glimac;
 using namespace global;
@@ -11,8 +12,9 @@ using namespace std;
 using namespace glm;
 int main(int argc, char** argv) {
     // Initialize SDL and open a window
-    SDLWindowManager windowManager(800, 600, "GLImac");
-
+//    int width = glutGet(GLUT_SCREEN_WIDTH);
+//    int height = glutGet(GLUT_SCREEN_HEIGHT);
+    SDLWindowManager windowManager(/*width, height*/800,600, "GLImac");
     // Initialize glew for OpenGL3+ support
     GLenum glewInitError = glewInit();
     if(GLEW_OK != glewInitError) {
