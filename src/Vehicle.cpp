@@ -21,13 +21,7 @@ void Vehicle::init(const FilePath& applicationPath) {
     program = loadProgram(applicationPath.dirPath() + "shaders/Vehicle.vs.glsl",
                 applicationPath.dirPath() + "shaders/Vehicle.fs.glsl");
 
-    program.use();
 //    images[0] = loadImage(applicationPath.dirPath() + "assets/3D_models/Vehicle/vehicle.jpg");
-
-    uTextureId = glGetUniformLocation(program.getGLId(), "uTexture");
-    uMVPMatrixId = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
-    uMVMatrixId = glGetUniformLocation(program.getGLId(), "uMVMatrix");
-    uNormalMatrixId = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
 
 //    init_texture();
 //    duplicate_vertex();
@@ -172,7 +166,11 @@ void Vehicle::draw() {
     // donne la texture au shader pour l'appliquer avec draw
 //    glBindTexture(GL_TEXTURE_2D, texture[0]);
 //    glUniform1i(uTextureId, 0);
-
+    program.use();
+    uTextureId = glGetUniformLocation(program.getGLId(), "uTexture");
+    uMVPMatrixId = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
+    uMVMatrixId = glGetUniformLocation(program.getGLId(), "uMVMatrix");
+    uNormalMatrixId = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
 
     for (unsigned int i = 0; i < vehicle.getMeshCount(); ++i) {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elements[i]);
@@ -203,7 +201,7 @@ void Vehicle::draw() {
 }
 
 void Vehicle::roll(Geometry::Vertex v){
-    vec3 vec_trans = v.m_Position-vehicle.getVertexBuffer()->m_Position;
+    vec3 vec_trans = v.m_Position - vehicle.getVertexBuffer()->m_Position;
     translate(vec_trans);
 }
 

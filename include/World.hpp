@@ -4,12 +4,14 @@
 #include <Vehicle.hpp>
 #include <Environnement.hpp>
 #include <RollPath.hpp>
+#include <FlatGround.hpp>
 
 class World : public Drawable {
 
 private :
     // TODO Pouvoir faire un array de drawable pour mettre tout nos éléments
     Environnement environnement;
+    FlatGround flatGround;
     Vehicle vehicle;
     RollPath roll_path;
 public :

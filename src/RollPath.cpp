@@ -45,12 +45,6 @@ void RollPath::init(const FilePath& applicationPath){
     program = loadProgram(applicationPath.dirPath() + "shaders/RollPath.vs.glsl",
                           applicationPath.dirPath() + "shaders/RollPath.fs.glsl");
 
-    program.use();
-
-    uTextureId = glGetUniformLocation(program.getGLId(), "uTexture");
-    uMVPMatrixId = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
-    uMVMatrixId = glGetUniformLocation(program.getGLId(), "uMVMatrix");
-    uNormalMatrixId = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
 
 //    init_texture();
 //    duplicate_vertex();
@@ -122,6 +116,12 @@ void RollPath::init_index(){
 
 void RollPath::draw(){
 
+    program.use();
+
+    uTextureId = glGetUniformLocation(program.getGLId(), "uTexture");
+    uMVPMatrixId = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
+    uMVMatrixId = glGetUniformLocation(program.getGLId(), "uMVMatrix");
+    uNormalMatrixId = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
 }
 
 void RollPath::duplicate_vertex(){

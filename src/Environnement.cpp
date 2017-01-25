@@ -1,7 +1,4 @@
 #include <Environnement.hpp>
-#include <GL/glew.h>
-#include <GL_global.hpp>
-#include <glimac/Program.hpp>
 
 using namespace glimac;
 using namespace std;
@@ -11,21 +8,18 @@ using  namespace glm;
 void Environnement::init(const FilePath& applicationPath) {
     this->environnement.loadOBJ(
             applicationPath.dirPath() + "assets/3D_models/Landscape/environnement.obj",
-            applicationPath.dirPath() + "assets/3D_models/Landscape/environnement.mtl",
+            applicationPath.dirPath() + "assets/3D_models/Landscape/",
             false
     );
 
     program = loadProgram(applicationPath.dirPath() + "shaders/Environnement.vs.glsl",
                 applicationPath.dirPath() + "shaders/Environnement.fs.glsl");
 
-    program.use();
 
     images[0] = loadImage(applicationPath.dirPath() + "assets/3D_models/Landscape/environnement.jpg");
 
-    uTextureId = glGetUniformLocation(program.getGLId(), "uTexture");
-    uMVPMatrixId = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
-    uMVMatrixId = glGetUniformLocation(program.getGLId(), "uMVMatrix");
-    uNormalMatrixId = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
+
+
 
     init_texture();
 //    duplicate_vertex();
@@ -33,7 +27,6 @@ void Environnement::init(const FilePath& applicationPath) {
     init_vbo();
     init_vao();
     init_index();
-    translate(vec3(0.0f,-15.0f,0.0f));
 
 }
 
@@ -61,8 +54,8 @@ void Environnement::duplicate_vertex() {
     // Notre buffer avec tous les vertex qui ont été duppliqué
 
     /****** on dupplique donc nos sommets et en même temps on doit leur donner nos coordonnées de texture *****/
-    int nb_index = environnement.getMeshBuffer()[1].m_nIndexCount;
-    size_t offset = environnement.getMeshBuffer()[1].m_nIndexOffset;
+    int nb_index = environnement.getMeshBuffer()[0].m_nIndexCount;
+    size_t offset = environnement.getMeshBuffer()[0].m_nIndexOffset;
     m_VertexBuffer = vector<Geometry::Vertex>(nb_index);
 
     for (int i = 0; i < nb_index; ++i) {
@@ -91,7 +84,9 @@ void Environnement::init_vbo() {
 
     // Envoie les donnés
     // version pour utiliser drawElement
-    glBufferData(GL_ARRAY_BUFFER, this->environnement.getVertexCount()*sizeof(Geometry::Vertex), this->environnement.getVertexBuffer(), GL_STATIC_DRAW);
+//    glBufferData(GL_ARRAY_BUFFER, this->environnement.getVertexCount()*sizeof(Geometry::Vertex), this->environnement.getVertexBuffer(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 4*sizeof(Geometry::Vertex), this->environnement.getVertexBuffer(), GL_STATIC_DRAW);
+
 
 //    glBufferData(GL_ARRAY_BUFFER, m_VertexBuffer.size() * sizeof(Geometry::Vertex), m_VertexBuffer.data(), GL_STATIC_DRAW);
 
@@ -153,12 +148,18 @@ void Environnement::init_index() {
 
 void Environnement::draw() {
     glBindVertexArray(vao);
+    program.use();
+    uTextureId = glGetUniformLocation(program.getGLId(), "uTexture");
+    uMVPMatrixId = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
+    uMVMatrixId = glGetUniformLocation(program.getGLId(), "uMVMatrix");
+    uNormalMatrixId = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
 
     // donne la texture au shader pour l'appliquer avec draw
     glBindTexture(GL_TEXTURE_2D, texture[0]);
     glUniform1i(uTextureId, 0);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elements[0]);
+
 
 //    mat4 translate = glm::translate(MVMatrix, vec3(0.0f,-15.0f,0.0f));
 //    TIME += 1;
@@ -171,7 +172,7 @@ void Environnement::draw() {
     // afficher bien la forme grace au index mais texture impossible...
     glDrawElements(
             GL_TRIANGLES,      // mode
-            environnement.getMeshBuffer()[0].m_nIndexCount,    // count
+            environnement.getIndexCount(),    // count
             GL_UNSIGNED_INT,   // type
             (void*)0       // element array buffer offset
     );
