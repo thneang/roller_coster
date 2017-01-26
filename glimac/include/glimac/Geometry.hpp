@@ -37,10 +37,10 @@ public:
         float m_Shininess;
         float m_RefractionIndex;
         float m_Dissolve;
-        const Image* m_pKaMap;
-        const Image* m_pKdMap;
-        const Image* m_pKsMap;
-        const Image* m_pNormalMap;
+        const Image* m_pKaMap = nullptr;
+        const Image* m_pKdMap = nullptr;
+        const Image* m_pKsMap = nullptr;
+        const Image* m_pNormalMap = nullptr;
     };
 
 private:
