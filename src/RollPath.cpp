@@ -152,7 +152,7 @@ void RollPath::draw(){
     glUniformMatrix4fv(uNormalMatrixId, 1, GL_FALSE, value_ptr(NormalMatrixMul));
 
 //    glDrawArrays(GL_QUADRATIC_CURVE_TO_NV, 0, m_VertexBuffer.size());
-    glDrawArrays(GL_LINE, 0, m_VertexBuffer.size());
+    glDrawArrays(GL_LINES, 0, m_VertexBuffer.size());
 
     glBindVertexArray(0);
 
