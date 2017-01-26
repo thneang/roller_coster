@@ -236,8 +236,13 @@ void Vehicle::draw() {
     glBindVertexArray(0);
 }
 
-void Vehicle::roll(float time){
-
+void Vehicle::roll(glm::vec3 v){
+    glm::vec3 vCenter = glm::vec3(0.0,0.0,0.0);
+    //angleY = cos-1(adj/hyp) = cos-1(V(x²+z²)/norme(v-vCenter))
+    rotate(acos(glm::sqrt((v.x-vCenter.x)*(v.x-vCenter.x)+(v.z-vCenter.z)*(v.z-vCenter.z))/(v-vCenter).length()),vec3(0,1,0));
+    //angleX = cos-1(adj/hyp) = cos-1(z/V(x²+z²))
+    rotate(acos((v.z-vCenter.z)/glm::sqrt((v.x-vCenter.x)*(v.x-vCenter.x)+(v.z-vCenter.z)*(v.z-vCenter.z))),vec3(1,0,0));
+    translate(v-vCenter);
 }
 
 void Vehicle::free() {

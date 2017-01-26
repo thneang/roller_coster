@@ -71,7 +71,14 @@ int main(int argc, char** argv) {
                 }
             }
             if(windowManager.isKeyPressed(SDLK_s)){
-                cout << time << endl;
+                if(!world.isRolling()){
+                    cout << "vehicule start" << endl;
+                    world.vehicleStart();
+                }
+                else{
+                    cout << "vehicule stop" << endl;
+                    world.vehicleStop();
+                }
                 //véhicule arret/marche
             }
 

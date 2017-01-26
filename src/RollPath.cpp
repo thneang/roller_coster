@@ -126,6 +126,14 @@ void RollPath::add_point_controle(vec3 v1, vec3 v2, vec3 v3){
     list_point_base[list_point_base.size()-1].m_Position = list_point_base[list_point_base.size()-2].m_Position + v3;
 }
 
+glm::vec3 RollPath::getPointOfTime(float time){
+    int time_s = time/1000;
+    std::cout << "bla " <<time_s % int(m_VertexBuffer.size()-1) << std::endl;
+    std::cout << "getPoint : "<< m_VertexBuffer[time_s % int(m_VertexBuffer.size()-1)].m_Position<<std::endl;
+    std::cout << "bla " << std::endl;
+    return m_VertexBuffer[time_s % int(m_VertexBuffer.size()-1)].m_Position;
+}
+
 void RollPath::init_texture(){
     // créer un buffer pour notre texture
     glGenTextures(1, &texture[0]);

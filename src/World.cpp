@@ -23,17 +23,24 @@ void World::init(const FilePath& filepath) {
 }
 
 void World::draw() {
+    if(isRolling()){
+        RollPath &r  = (RollPath &)world[1];
+        Vehicle &v = (Vehicle &)world[2];
+        clock_t a = clock();
+        vec3 vec = r.getPointOfTime(a - clock_start + timeRolled);
+        v.roll(vec);
+    }
     for (Drawable *object : world) {
         object->draw();
     }
 }
 
-void World::rotateCamera(vec2 v){
-    ProjMatrix = glm::rotate(ProjMatrix,v.x/100,vec3(0,1,0));
-    NormalMatrix *= ProjMatrix;
-    ProjMatrix = glm::rotate(ProjMatrix,v.y/100,vec3(1,0,0));
-    NormalMatrix *= ProjMatrix;
-}
+//void World::rotateCamera(vec2 v){
+//    ProjMatrix = glm::rotate(ProjMatrix,v.x/100,vec3(0,1,0));
+//    NormalMatrix *= ProjMatrix;
+//    ProjMatrix = glm::rotate(ProjMatrix,v.y/100,vec3(1,0,0));
+//    NormalMatrix *= ProjMatrix;
+//}
 
 void World::rotate(float angle, vec3 v){
     MVMatrix = glm::rotate(MVMatrix,angle,v);
@@ -54,8 +61,19 @@ void World::scale(vec3 v){
 }
 
 // TODO utilise le roll de vehicle et pas passe par world
-void World::roll(float time){
-//    vehicle.roll(time);
+void World::vehicleStart(){
+    vehicleIsRolling = true;
+    clock_start = clock();
+}
+
+void World::vehicleStop() {
+    vehicleIsRolling = false;
+    clock_t c = clock();
+    timeRolled += c - clock_start;
+}
+
+bool World::isRolling() {
+    return vehicleIsRolling;
 }
 
 void World::free() {

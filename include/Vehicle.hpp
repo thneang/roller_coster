@@ -25,7 +25,7 @@ public :
 
     void draw();
 
-    void roll(float time);
+    void roll(glm::vec3 v);
 
     void free();
 };

@@ -20,6 +20,8 @@ private:
 public:
     void initCurve();
 
+    glm::vec3 getPointOfTime(float time);
+
     void init(const FilePath&);
 
     void init_texture();
