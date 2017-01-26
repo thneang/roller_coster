@@ -27,7 +27,7 @@ public :
 
     void draw();
 
-    void roll(Geometry::Vertex direction);
+    void roll(float time);
 
     void free();
 };

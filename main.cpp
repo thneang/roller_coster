@@ -90,8 +90,8 @@ int main(int argc, char** argv) {
             if(windowManager.isMouseButtonPressed(SDL_BUTTON_RIGHT)) {
                 SDL_WM_GrabInput(SDL_GRAB_ON);
                 if(e.type == SDL_MOUSEMOTION) {
-                    cout <<"y " << camera->rotateUp(e.motion.yrel) << endl;
-                    cout <<"x " << camera->rotateLeft(e.motion.xrel) << endl;
+                    camera->rotateUp(e.motion.yrel);
+                    camera->rotateLeft(e.motion.xrel);
                 }
             }
             SDL_WM_GrabInput(SDL_GRAB_OFF);

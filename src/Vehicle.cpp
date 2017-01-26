@@ -204,9 +204,8 @@ void Vehicle::draw() {
     glBindVertexArray(0);
 }
 
-void Vehicle::roll(Geometry::Vertex v){
-    vec3 vec_trans = v.m_Position - vehicle.getVertexBuffer()->m_Position;
-    translate(vec_trans);
+void Vehicle::roll(float time){
+
 }
 
 void Vehicle::free() {

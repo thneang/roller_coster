@@ -5,19 +5,20 @@ using namespace glm;
 using namespace glimac;
 
 void World::init(const FilePath& filepath) {
-    environnement.init(filepath);
+//    environnement.init(filepath);
 //    flatGround.init(filepath);
-    vehicle.init(filepath);
-//    roll_path.init(filepath);
+//    vehicle.init(filepath);
+    roll_path.init(filepath);
     // J'ai déplacé le monde très loin pour avoir une vue global
 //    translate(vec3(0.0f,0.0f,-1000.0f));
 //    rotate(90.0f,vec3(0.0f,1.0f,0.0f));
 }
 
 void World::draw() {
-    environnement.draw();
+//    environnement.draw();
 //    flatGround.draw();
-    vehicle.draw();
+//    vehicle.draw();
+    roll_path.draw();
 }
 
 void World::rotateCamera(vec2 v){
@@ -46,11 +47,12 @@ void World::scale(vec3 v){
 }
 
 void World::roll(float time){
-    vehicle.roll(roll_path.getPointCurve(time));
+    vehicle.roll(time);
 }
 
 void World::free() {
     environnement.free();
 //    flatGround.free();
     vehicle.free();
+    roll_path.free();
 }

@@ -10,48 +10,65 @@ using namespace std;
 using namespace global;
 
 
-Geometry::Vertex RollPath::getPointCurve(float time){
-    float t = time - glm::floatBitsToInt(time);
-    vec3 p0 = m_vertex_buffer[glm::floatBitsToInt(time) % 5000].m_Position;
-    vec3 p1 = m_vertex_buffer[(glm::floatBitsToInt(time)+1) % 5000].m_Position;
-    vec3 p2 = m_vertex_buffer[(glm::floatBitsToInt(time)+2) % 5000].m_Position;
-    vec3 p3 = m_vertex_buffer[(glm::floatBitsToInt(time)+3) % 5000].m_Position;
-    vec3 pos = p0*(1-t)*(1-t)*(1-t)+3.0f*p1*t*(1-t)*(1-t)+3.0f*p2*t*t*(1-t)+p3*t*t*t;
-    Geometry::Vertex v;
-    v.m_Position = pos;
-    v.m_TexCoords = m_vertex_buffer[0].m_TexCoords;
-    v.m_Normal = pos;
-    return v;
+void RollPath::initCurve(){
+    for(unsigned int i=0;i < list_point_base.size()-3;i+=3){
+        vec3 p0 = list_point_base[i].m_Position;
+        vec3 p1 = list_point_base[i+1].m_Position;
+        vec3 p2 = list_point_base[i+2].m_Position;
+        vec3 p3 = list_point_base[i+3].m_Position;
+        for(float t=0.0f ; t < 1.0f ; t+=1/100.0f) {
+            vec3 pos = p0 * (1 - t) * (1 - t) * (1 - t) + 3.0f * p1 * t * (1 - t) * (1 - t) + 3.0f * p2 * t * t * (1 - t) +
+                       p3 * t * t * t;
+            Geometry::Vertex v;
+            v.m_Position = pos;
+            std::cout << pos << std::endl;
+            m_VertexBuffer.push_back(v);
+        }
+    }
+    for(unsigned int i=0;i<m_VertexBuffer.size();i+=3){
+        vec3 n = glm::cross(glm::normalize(m_VertexBuffer[i+1].m_Position - m_VertexBuffer[i].m_Position),
+                            glm::normalize(m_VertexBuffer[i+2].m_Position - m_VertexBuffer[i].m_Position));
+        m_VertexBuffer[i].m_Normal = n;
+        m_VertexBuffer[i+1].m_Normal = n;
+        m_VertexBuffer[i+2].m_Normal = n;
+    }
+    for(unsigned int i = 0 ; i < m_VertexBuffer.size() ; i++) {
+        m_VertexBuffer[i].m_TexCoords = vec2(i/m_VertexBuffer.size(),0.5);
+    }
 }
 
 void RollPath::init(const FilePath& applicationPath){
-    for(int i=0;i<6;i++){
-        vec3 pos = vec3(std::log(i)*300,std::log(i)*300,std::log(i)*300);
-        Geometry::Vertex v;
-        v.m_Position= pos;
-        v.m_Normal = pos;
-        v.m_TexCoords = vec2(i/12,0.5);
-        m_vertex_buffer.push_back(v);
+    for(int i=0;i<13;i++){
+        list_point_base.push_back(Geometry::Vertex());
     }
-    for(int i=6, j=6;i>0;i--,j++){
-        vec3 pos = vec3(std::log(j)*300,std::log(i)*300,std::log(j)*300);
-        Geometry::Vertex v;
-        v.m_Position= pos;
-        v.m_Normal = pos;
-        v.m_TexCoords = vec2(j/12,0.5);
-        m_vertex_buffer.push_back(v);
-    }
+
+    list_point_base[0].m_Position = vec3(0,0,0);
+    list_point_base[1].m_Position = vec3(400,500,600);
+    list_point_base[2].m_Position = vec3(900,600,900);
+    list_point_base[3].m_Position = vec3(1000,700,1000);
+
+    list_point_base[4].m_Position = list_point_base[3].m_Position;
+    list_point_base[5].m_Position = vec3(1500,300,1500);
+    list_point_base[6].m_Position = vec3(1600,300,1800);
+
+    list_point_base[7].m_Position = list_point_base[6].m_Position;
+    list_point_base[8].m_Position = vec3(1800,200,1700);
+    list_point_base[9].m_Position = vec3(2100,100,1800);
+
+    list_point_base[10].m_Position = list_point_base[9].m_Position;
+    list_point_base[11].m_Position = vec3(2300,200,2100);
+    list_point_base[12].m_Position = vec3(2500,150,2100);
 
     program = loadProgram(applicationPath.dirPath() + "shaders/RollPath.vs.glsl",
                           applicationPath.dirPath() + "shaders/RollPath.fs.glsl");
 
-
+    initCurve();
+    std::cout << "point 0 " << m_VertexBuffer[0].m_Position << std::endl;
 //    init_texture();
 //    duplicate_vertex();
 
     init_vbo();
     init_vao();
-    init_index();
 
 }
 
@@ -83,7 +100,7 @@ void RollPath::init_vbo(){
 
     // Envoie les donnés
     // version pour utiliser drawElement
-    glBufferData(GL_ARRAY_BUFFER, this->m_vertex_buffer.size()*sizeof(Geometry::Vertex), &this->m_vertex_buffer[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, this->m_VertexBuffer.size()*sizeof(Geometry::Vertex), m_VertexBuffer.data(), GL_STATIC_DRAW);
 
 //    glBufferData(GL_ARRAY_BUFFER, m_VertexBuffer.size() * sizeof(Geometry::Vertex), m_VertexBuffer.data(), GL_STATIC_DRAW);
 
@@ -116,12 +133,29 @@ void RollPath::init_index(){
 
 void RollPath::draw(){
 
+    glBindVertexArray(vao);
+
     program.use();
 
     uTextureId = glGetUniformLocation(program.getGLId(), "uTexture");
     uMVPMatrixId = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
     uMVMatrixId = glGetUniformLocation(program.getGLId(), "uMVMatrix");
     uNormalMatrixId = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
+
+    mat4 rotate = glm::rotate(MatrixID, 90.0f, vec3(0.0f, -1.0f, 0.0f));
+
+    MVMatrixMul = MVMatrix * rotate;
+    NormalMatrixMul = transpose(MVMatrixMul);
+
+    glUniformMatrix4fv(uMVPMatrixId, 1, GL_FALSE, value_ptr(ProjMatrix * MVMatrixMul));
+    glUniformMatrix4fv(uMVMatrixId, 1, GL_FALSE, value_ptr(MVMatrixMul));
+    glUniformMatrix4fv(uNormalMatrixId, 1, GL_FALSE, value_ptr(NormalMatrixMul));
+
+//    glDrawArrays(GL_QUADRATIC_CURVE_TO_NV, 0, m_VertexBuffer.size());
+    glDrawArrays(GL_LINE, 0, m_VertexBuffer.size());
+
+    glBindVertexArray(0);
+
 }
 
 void RollPath::duplicate_vertex(){

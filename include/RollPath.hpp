@@ -11,13 +11,13 @@ using namespace glimac;
 class RollPath : public Drawable{
 private:
     // Sommets utilisé pour construire la courbe de bézier
-    std::vector<Geometry::Vertex> m_vertex_buffer;
+    std::vector<Geometry::Vertex> list_point_base;
 
     // Sommets formant la courbe de bézier
-    std::vector<Geometry::Vertex> m_bezier_vertex_buffer;
+//    std::vector<Geometry::Vertex> m_bezier_vertex_buffer;
 
 public:
-    Geometry::Vertex getPointCurve(float time);
+    void initCurve();
 
     void init(const FilePath&);
 
