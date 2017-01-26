@@ -1,24 +1,27 @@
 #include <World.hpp>
+#include <RollPath.hpp>
+#include <Environnement.hpp>
 
 using namespace global;
 using namespace glm;
 using namespace glimac;
 
 void World::init(const FilePath& filepath) {
-//    environnement.init(filepath);
-//    flatGround.init(filepath);
-//    vehicle.init(filepath);
-    roll_path.init(filepath);
-    // J'ai déplacé le monde très loin pour avoir une vue global
-//    translate(vec3(0.0f,0.0f,-1000.0f));
-//    rotate(90.0f,vec3(0.0f,1.0f,0.0f));
+    Environnement *environnement = new Environnement();
+    world.push_back(std::move(environnement));
+
+    RollPath *rollPath = new RollPath();
+    world.push_back(std::move(rollPath));
+
+    for (Drawable *object : world) {
+        object->init(filepath);
+    }
 }
 
 void World::draw() {
-//    environnement.draw();
-//    flatGround.draw();
-//    vehicle.draw();
-    roll_path.draw();
+    for (Drawable *object : world) {
+        object->draw();
+    }
 }
 
 void World::rotateCamera(vec2 v){
@@ -46,13 +49,13 @@ void World::scale(vec3 v){
     NormalMatrix *= MVMatrix;
 }
 
+// TODO utilise le roll de vehicle et pas passe par world
 void World::roll(float time){
-    vehicle.roll(time);
+//    vehicle.roll(time);
 }
 
 void World::free() {
-    environnement.free();
-//    flatGround.free();
-    vehicle.free();
-    roll_path.free();
+    for (Drawable *object : world) {
+        object->free();
+    }
 }
