@@ -177,25 +177,22 @@ void Environnement::draw() {
             (void*)0       // element array buffer offset
     );
 
-    // On a un rectangle texturé pour le moment
-    // pour faire le sol on translate ce rectangle et on draw, autant de fois qu'on a besoin pour faire le sol
-    vec3 distance = environnement.getVertexBuffer()[1].m_Position - environnement.getVertexBuffer()[0].m_Position;
-    mat4 translateV = glm::translate(MatrixID, distance);
-    for (int i = 0; i < 8; ++i) {
-        mat4 translateH = glm::translate(translateV, distance * vec3((float) i, 0.0f, 0.0f));
-        glUniformMatrix4fv(uMVPMatrixId, 1, GL_FALSE, value_ptr(ProjMatrix * MVMatrix * translateH));
-        glUniformMatrix4fv(uMVMatrixId, 1, GL_FALSE, value_ptr(MVMatrix));
-        glUniformMatrix4fv(uNormalMatrixId, 1, GL_FALSE, value_ptr(NormalMatrix * translateH));
+    mat4 scale = glm::scale(MatrixID, vec3(30.0f, 0.0f, 30.0f));
+    MVMatrixMul = MVMatrix * scale;
+    NormalMatrixMul = transpose(MVMatrixMul);
+
+    glUniformMatrix4fv(uMVPMatrixId, 1, GL_FALSE, value_ptr(ProjMatrix * MVMatrixMul));
+    glUniformMatrix4fv(uMVMatrixId, 1, GL_FALSE, value_ptr(MVMatrixMul));
+    glUniformMatrix4fv(uNormalMatrixId, 1, GL_FALSE, value_ptr(NormalMatrixMul));
 //
 //        // Draw the triangles !
 //        // afficher bien la forme grace au index mais texture impossible...
-        glDrawElements(
-                GL_TRIANGLES,      // mode
-                environnement.getIndexCount(),    // count
-                GL_UNSIGNED_INT,   // type
-                (void*)0       // element array buffer offset
-        );
-    }
+    glDrawElements(
+            GL_TRIANGLES,      // mode
+            environnement.getIndexCount(),    // count
+            GL_UNSIGNED_INT,   // type
+            (void*)0       // element array buffer offset
+    );
 
 //    glDrawArrays(GL_TRIANGLES, 0, m_VertexBuffer.size());
 
