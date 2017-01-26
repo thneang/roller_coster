@@ -21,7 +21,6 @@ void RollPath::initCurve(){
                        p3 * t * t * t;
             Geometry::Vertex v;
             v.m_Position = pos;
-            std::cout << pos << std::endl;
             m_VertexBuffer.push_back(v);
         }
     }
@@ -63,7 +62,6 @@ void RollPath::init(const FilePath& applicationPath){
                           applicationPath.dirPath() + "shaders/RollPath.fs.glsl");
 
     initCurve();
-    std::cout << "point 0 " << m_VertexBuffer[0].m_Position << std::endl;
 //    init_texture();
 //    duplicate_vertex();
 

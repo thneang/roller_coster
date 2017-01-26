@@ -9,9 +9,9 @@ class TrackballCamera : public Camera {
 
 public:
     TrackballCamera() {
-        m_fDistance = 5.0f;
-        m_fAngleX = 0.0f;
-        m_fAngleY = 0.0f;
+        m_fDistance = -200.0f;
+        m_fAngleX = 13.0f;
+        m_fAngleY = 32.0f;
     };
     void moveFront(float delta);
     float rotateLeft(float degrees);
