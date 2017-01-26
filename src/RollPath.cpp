@@ -37,26 +37,73 @@ void RollPath::initCurve(){
 }
 
 void RollPath::init(const FilePath& applicationPath){
-    for(int i=0;i<13;i++){
-        list_point_base.push_back(Geometry::Vertex());
-    }
+    list_point_base.push_back(Geometry::Vertex());
+    list_point_base[list_point_base.size()-4].m_Position = vec3(0,0,0);
+    //monté
+    add_point_controle(vec3(200,0,0),
+                       vec3(200,500,0),
+                       vec3(200,500,0));
+    //ralentissement
+    add_point_controle(vec3(50,0,0),
+                       vec3(50,0,0),
+                       vec3(50,0,0));
+    //descente
+    add_point_controle(vec3(200,-400,0),
+                       vec3(200,-400,0),
+                       vec3(200,0,0));
+    //monté loop
+    add_point_controle(vec3(200,400,50),
+                       vec3(-100,400,50),
+                       vec3(-100,200,50));
+    //pointe loop
+    add_point_controle(vec3(-25,25,0),
+                       vec3(-25,0,0),
+                       vec3(-25,-25,0));
+    //descente loop
+    add_point_controle(vec3(-100,-200,50),
+                       vec3(-100,-400,50),
+                       vec3(200,-300,0));
+    //virage après loop
+    add_point_controle(vec3(200,-100,0),
+                       vec3(200,0,200),
+                       vec3(-200,0,200));
+    //monté après virage
+    add_point_controle(vec3(-200,0,50),
+                       vec3(-200,500,0),
+                       vec3(-200,500,0));
+    //ralentissement
+    add_point_controle(vec3(-50,0,0),
+                       vec3(-50,0,0),
+                       vec3(-50,0,0));
+    //descente
+    add_point_controle(vec3(-100,-400,0),
+                       vec3(-100,-300,0),
+                       vec3(-100,-100,0));
+    //monté petite loop
+    add_point_controle(vec3(-100,50,-100),
+                       vec3(-50,50,50),
+                       vec3(-50,50,50));
+    //ralentissement
+    add_point_controle(vec3(-10,10,10),
+                       vec3(-10,0,10),
+                       vec3(-10,-10,10));
+    //descente petite loop
+    add_point_controle(vec3(-50,-50,50),
+                       vec3(-50,-50,50),
+                       vec3(-100,-50,-100));
+    //virage après loop
+    add_point_controle(vec3(-200,0,-50),
+                       vec3(-200,0,-200),
+                       vec3(200,0,-200));
 
-    list_point_base[0].m_Position = vec3(0,0,0);
-    list_point_base[1].m_Position = vec3(400,500,600);
-    list_point_base[2].m_Position = vec3(900,600,900);
-    list_point_base[3].m_Position = vec3(1000,700,1000);
+    //fin à ameliorer ( une fois quon sera sur de notre trajectoire on fera une descente moins raid en fin.)
+    vec3 v1 = -list_point_base[list_point_base.size()-1].m_Position/3.0f;
+    vec3 v2 = -list_point_base[list_point_base.size()-1].m_Position/3.0f;
+    vec3 v3 = -list_point_base[list_point_base.size()-1].m_Position/3.0f;
+    add_point_controle(v1,
+                       v2,
+                       v3);
 
-    list_point_base[4].m_Position = list_point_base[3].m_Position;
-    list_point_base[5].m_Position = vec3(1500,300,1500);
-    list_point_base[6].m_Position = vec3(1600,300,1800);
-
-    list_point_base[7].m_Position = list_point_base[6].m_Position;
-    list_point_base[8].m_Position = vec3(1800,200,1700);
-    list_point_base[9].m_Position = vec3(2100,100,1800);
-
-    list_point_base[10].m_Position = list_point_base[9].m_Position;
-    list_point_base[11].m_Position = vec3(2300,200,2100);
-    list_point_base[12].m_Position = vec3(2500,150,2100);
 
     program = loadProgram(applicationPath.dirPath() + "shaders/RollPath.vs.glsl",
                           applicationPath.dirPath() + "shaders/RollPath.fs.glsl");
@@ -68,6 +115,15 @@ void RollPath::init(const FilePath& applicationPath){
     init_vbo();
     init_vao();
 
+}
+
+void RollPath::add_point_controle(vec3 v1, vec3 v2, vec3 v3){
+    for(int i=0;i<3;i++){
+        list_point_base.push_back(Geometry::Vertex());
+    }
+    list_point_base[list_point_base.size()-3].m_Position = list_point_base[list_point_base.size()-4].m_Position + v1;
+    list_point_base[list_point_base.size()-2].m_Position = list_point_base[list_point_base.size()-3].m_Position + v2;
+    list_point_base[list_point_base.size()-1].m_Position = list_point_base[list_point_base.size()-2].m_Position + v3;
 }
 
 void RollPath::init_texture(){
