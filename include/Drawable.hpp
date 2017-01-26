@@ -42,7 +42,16 @@ protected :
     // Program pour utiliser les shaders
     glimac::Program program;
 
+    /************************ ID des textures dans les shaders ********************************************************/
+
     GLint uTextureId;
+
+    GLint  utexture_ka_ID;
+    GLint  utexture_kd_ID;
+    GLint  utexture_ks_ID;
+    GLint  utexture_Normal_ID;
+    /******************************************************************************************************************/
+
 
     /************************* Id des matrices pour les shaders *******************************************************/
     GLint uMVPMatrixId;
