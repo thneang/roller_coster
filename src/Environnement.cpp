@@ -32,6 +32,7 @@ void Environnement::init(const FilePath& applicationPath) {
 
 void Environnement::init_texture() {
 
+    texture = new GLuint[1];
     // créer un buffer pour notre texture
     glGenTextures(1, &texture[0]);
 
@@ -116,8 +117,10 @@ void Environnement::init_vao() {
 }
 
 void Environnement::init_index() {
+
+    elements = new GLuint[environnement.getMeshCount()];
     // Generate a buffer for the indices
-    glGenBuffers(1, &elements[0]);
+    glGenBuffers(environnement.getMeshCount(), elements);
 
     /************************ Envoie le buffer de la première mesh au gpu ***********************/
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elements[0]);
@@ -204,6 +207,9 @@ void Environnement::draw() {
 
 
 void Environnement::free() {
+    if (texture) {
+        delete[] texture;
+    }
     glDeleteBuffers(1, &vbo);
     glDeleteVertexArrays(1, &vao);
 }

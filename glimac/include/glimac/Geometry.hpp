@@ -77,6 +77,14 @@ public:
         return m_MeshBuffer.size();
     }
 
+    const Material* getMaterialBuffer() const {
+        return m_Materials.data();
+    }
+
+    size_t getMaterialCount() const {
+        return m_Materials.size();
+    }
+
     bool loadOBJ(const FilePath& filepath, const FilePath& mtlBasePath, bool loadTextures = true);
 
     const BBox3f& getBoundingBox() const {

@@ -11,14 +11,14 @@ class Drawable {
 protected :
 
     // ensemble des "ID" de texture
-    GLuint texture[1];
+    GLuint *texture;
     // "ID" du buffer de vertex
     GLuint vbo;
     //"ID" du buffer attribut
     GLuint vao;
 
     // Contient les "ID" de nos meshes
-    GLuint elements[4];
+    GLuint *elements;
 
     // Le buffer qui contient nos vertex, une duplication de sommets importé est nécessaire pour appliquer des textures
     // on fait cela car un meme vertex ne peut pas avoir plusieurs coordonnée de texture;

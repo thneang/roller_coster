@@ -30,14 +30,14 @@ void Vehicle::init(const FilePath& applicationPath) {
     init_vao();
     init_index();
 
-    scale(vec3(0.5f,0.5f,0.5f));
-
 }
 
 void Vehicle::init_texture() {
 
+    texture = new GLuint[vehicle.getMeshCount()];
+
     // créer un buffer pour notre texture
-    glGenTextures(1, &texture[0]);
+    glGenTextures(vehicle.getMaterialCount(), texture);
 
 
     // on bind la texture
@@ -52,30 +52,6 @@ void Vehicle::init_texture() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     glBindTexture(GL_TEXTURE_2D, 0);
-}
-
-void Vehicle::duplicate_vertex() {
-    // Notre buffer avec tous les vertex qui ont été duppliqué
-
-    /****** on duplique donc nos sommets et en même temps on doit leur donner nos coordonnées de texture *****/
-    int nb_index = vehicle.getMeshBuffer()[1].m_nIndexCount;
-    size_t offset = vehicle.getMeshBuffer()[1].m_nIndexOffset;
-    m_VertexBuffer = vector<Geometry::Vertex>(nb_index);
-
-    for (int i = 0; i < nb_index; ++i) {
-
-        Geometry::Vertex tmp = {
-                vehicle.getVertexBuffer()[vehicle.getIndexBuffer()[i + offset]].m_Position,
-                vehicle.getVertexBuffer()[vehicle.getIndexBuffer()[i + offset]].m_Normal,
-                vehicle.getVertexBuffer()[vehicle.getIndexBuffer()[i + offset]].m_TexCoords
-        };
-
-
-        // On a un tableau d'indice qui sont les indices (dans le tableaux des vertexs) des sommets qui forme la figure
-        m_VertexBuffer.push_back(tmp);
-
-    }
-
 }
 
 void Vehicle::init_vbo() {
@@ -117,6 +93,7 @@ void Vehicle::init_vao() {
 }
 
 void Vehicle::init_index() {
+    elements = new GLuint[vehicle.getMeshCount()];
     // Generate a buffer for the indices
     glGenBuffers(vehicle.getMeshCount(), elements);
 
