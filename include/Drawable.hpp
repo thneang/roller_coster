@@ -99,20 +99,20 @@ public :
 
     virtual void rotate(float angle,glm::vec3 v){
         MVMatrixMul = glm::rotate(global::MVMatrix,angle,v);
-        ProjMatrixMul *= MVMatrixMul;
-        NormalMatrixMul *= MVMatrixMul;
+        ProjMatrixMul += MVMatrixMul;
+        NormalMatrixMul += MVMatrixMul;
     }
 
     virtual void translate(glm::vec3 v){
         glm::mat4 translate = glm::translate(global::MVMatrix,v);
-        ProjMatrixMul *= translate;
-        NormalMatrixMul *= translate;
+        ProjMatrixMul += translate;
+        NormalMatrixMul += translate;
     }
 
     virtual void scale(glm::vec3 v){
         glm::mat4 scale = glm::scale(global::MVMatrix,v);
-        ProjMatrixMul *= scale;
-        NormalMatrixMul *= scale;
+        ProjMatrixMul += scale;
+        NormalMatrixMul += scale;
     }
 };
 

@@ -238,7 +238,7 @@ void Vehicle::draw() {
         MVMatrixMul = MVMatrix * scale;
         NormalMatrixMul = transpose(MVMatrixMul);
 
-        glUniformMatrix4fv(uMVPMatrixId, 1, GL_FALSE, value_ptr(ProjMatrix * MVMatrixMul));
+        glUniformMatrix4fv(uMVPMatrixId, 1, GL_FALSE, value_ptr(ProjMatrix * ProjMatrixMul * MVMatrixMul));
         glUniformMatrix4fv(uMVMatrixId, 1, GL_FALSE, value_ptr(MVMatrixMul));
         glUniformMatrix4fv(uNormalMatrixId, 1, GL_FALSE, value_ptr(NormalMatrixMul));
 
@@ -263,11 +263,16 @@ void Vehicle::draw() {
 
 void Vehicle::roll(glm::vec3 v){
     glm::vec3 vCenter = center(vehicle.getBoundingBox());
+
     //angleY = cos-1(adj/hyp) = cos-1(V(x²+z²)/norme(v-vCenter))
+//    std::cout <<(v.x-vCenter.x)*(v.x-vCenter.x)+(v.z-vCenter.z)*(v.z-vCenter.z)<< " " << (v-vCenter).length() << std::endl;
+//    std::cout <<acos(glm::sqrt((v.x-vCenter.x)*(v.x-vCenter.x)+(v.z-vCenter.z)*(v.z-vCenter.z))/(v-vCenter).length()) << std::endl;
     rotate(acos(glm::sqrt((v.x-vCenter.x)*(v.x-vCenter.x)+(v.z-vCenter.z)*(v.z-vCenter.z))/(v-vCenter).length()),vec3(0,1,0));
+
     //angleX = cos-1(adj/hyp) = cos-1(z/V(x²+z²))
     rotate(acos((v.z-vCenter.z)/glm::sqrt((v.x-vCenter.x)*(v.x-vCenter.x)+(v.z-vCenter.z)*(v.z-vCenter.z))),vec3(1,0,0));
-    translate(v-vCenter);
+
+    translate(v);
 }
 
 void Vehicle::free() {

@@ -28,11 +28,11 @@ void World::init(const FilePath& filepath) {
 
 void World::draw() {
     if(isRolling()){
-        RollPath &r  = (RollPath &)world[1];
-        Vehicle &v = (Vehicle &)world[2];
+        RollPath *r  = (RollPath*)world[1];
+        Vehicle *v = (Vehicle*)world[2];
         clock_t a = clock();
-        vec3 vec = r.getPointOfTime(a - clock_start + timeRolled);
-        v.roll(vec);
+        vec3 vec = r->getPointOfTime(a - clock_start + timeRolled);
+        v->roll(vec);
     }
     for (Drawable *object : world) {
         object->draw();

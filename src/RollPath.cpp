@@ -38,7 +38,7 @@ void RollPath::initCurve(){
 
 void RollPath::init(const FilePath& applicationPath){
     list_point_base.push_back(Geometry::Vertex());
-    list_point_base[list_point_base.size()-4].m_Position = vec3(0,0,0);
+    list_point_base[list_point_base.size()-4].m_Position = vec3(1,1,1);
     //monté
     add_point_controle(vec3(200,0,0),
                        vec3(200,500,0),
@@ -127,10 +127,7 @@ void RollPath::add_point_controle(vec3 v1, vec3 v2, vec3 v3){
 }
 
 glm::vec3 RollPath::getPointOfTime(float time){
-    int time_s = time/1000;
-    std::cout << "bla " <<time_s % int(m_VertexBuffer.size()-1) << std::endl;
-    std::cout << "getPoint : "<< m_VertexBuffer[time_s % int(m_VertexBuffer.size()-1)].m_Position<<std::endl;
-    std::cout << "bla " << std::endl;
+    int time_s = time/10000;
     return m_VertexBuffer[time_s % int(m_VertexBuffer.size()-1)].m_Position;
 }
 
