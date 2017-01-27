@@ -216,7 +216,6 @@ void Vehicle::draw() {
     uNormalMatrixId = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
 
     mat4 scale = glm::scale(MatrixID, vec3(2.f, 2.f, 2.f));
-    mat4 rotate = glm::rotate(MatrixID, 90.0f, vec3(0.0f, -1.0f, 0.0f));
 
     glBindTexture(GL_TEXTURE_2D, texture[0]);
     glUniform1i(uTextureId, 0);
@@ -233,7 +232,7 @@ void Vehicle::draw() {
 
 
 
-        MVMatrixMul = MVMatrix * scale * rotate;
+        MVMatrixMul = MVMatrix * scale;
         NormalMatrixMul = transpose(MVMatrixMul);
 
         glUniformMatrix4fv(uMVPMatrixId, 1, GL_FALSE, value_ptr(ProjMatrix * MVMatrixMul));
