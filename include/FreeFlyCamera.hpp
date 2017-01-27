@@ -11,7 +11,7 @@ private:
 
 public:
     FreeFlyCamera() {
-        m_Position = glm::vec3(0.0f,25.0f,0.0f);
+        m_Position = glm::vec3(0.0f,80.0f,0.0f);
         m_fPhi= M_PI;
         m_fTheta = 0.0f;
         sensitivity = 0.3f;
