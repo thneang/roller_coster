@@ -2,6 +2,7 @@
 #include <RollPath.hpp>
 #include <Environnement.hpp>
 #include <Vehicle.hpp>
+#include <Sky.hpp>
 
 using namespace global;
 using namespace glm;
@@ -16,6 +17,9 @@ void World::init(const FilePath& filepath) {
 
     Vehicle *vehicle = new Vehicle();
     world.push_back(std::move(vehicle));
+
+    Sky *sky = new Sky();
+    world.push_back(std::move(sky));
 
     for (Drawable *object : world) {
         object->init(filepath);
