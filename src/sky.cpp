@@ -26,6 +26,9 @@ void Sky::init(const FilePath& applicationPath) {
     init_vao();
     init_index();
 
+    sky.freeVertexBuffer();
+    sky.freeVertexBuffer();
+
 }
 
 void Sky::init_texture() {

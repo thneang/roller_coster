@@ -30,6 +30,9 @@ void Vehicle::init(const FilePath& applicationPath) {
     init_vao();
     init_index();
 
+    vehicle.freeIndexBuffer();
+    vehicle.freeVertexBuffer();
+
 }
 
 void Vehicle::init_texture() {

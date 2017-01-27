@@ -85,7 +85,19 @@ public:
         return m_Materials.size();
     }
 
-    bool loadOBJ(const FilePath& filepath, const FilePath& mtlBasePath, bool loadTextures = true);
+    void freeVertexBuffer() {
+        std::vector<Vertex>().swap(m_VertexBuffer);
+    }
+
+    void freeIndexBuffer() {
+        std::vector<unsigned int>().swap(m_IndexBuffer);
+
+    }
+
+
+
+
+        bool loadOBJ(const FilePath& filepath, const FilePath& mtlBasePath, bool loadTextures = true);
 
     const BBox3f& getBoundingBox() const {
         return m_BBox;

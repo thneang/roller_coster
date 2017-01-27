@@ -9,5 +9,5 @@ out vec3 fFragColor;
 uniform sampler2D uTexture;
 
 void main() {
-    fFragColor = vec3(255,255,255);
+    fFragColor = vec3(255,0,0);
 }

@@ -28,6 +28,9 @@ void Environnement::init(const FilePath& applicationPath) {
     init_vao();
     init_index();
 
+    environnement.freeVertexBuffer();
+    environnement.freeIndexBuffer();
+
 }
 
 void Environnement::init_texture() {
@@ -164,22 +167,6 @@ void Environnement::draw() {
     glBindTexture(GL_TEXTURE_2D, texture[0]);
     glUniform1i(uTextureId, 0);
 
-//    mat4 translate = glm::translate(MVMatrix, vec3(0.0f,-15.0f,0.0f));
-
-
-    glUniformMatrix4fv(uMVPMatrixId, 1, GL_FALSE, value_ptr(ProjMatrix * MVMatrix));
-    glUniformMatrix4fv(uMVMatrixId, 1, GL_FALSE, value_ptr(MVMatrix));
-    glUniformMatrix4fv(uNormalMatrixId, 1, GL_FALSE, value_ptr(NormalMatrix));
-
-    // Draw the triangles !
-    // afficher bien la forme grace au index mais texture impossible...
-    glDrawElements(
-            GL_TRIANGLES,      // mode
-            environnement.getIndexCount(),    // count
-            GL_UNSIGNED_INT,   // type
-            (void*)0       // element array buffer offset
-    );
-
     mat4 scale = glm::scale(MatrixID, vec3(30.0f, 0.0f, 30.0f));
     MVMatrixMul = MVMatrix * scale;
     NormalMatrixMul = transpose(MVMatrixMul);
@@ -192,7 +179,7 @@ void Environnement::draw() {
 //        // afficher bien la forme grace au index mais texture impossible...
     glDrawElements(
             GL_TRIANGLES,      // mode
-            environnement.getIndexCount(),    // count
+            environnement.getMeshBuffer()[0].m_nIndexCount,    // count
             GL_UNSIGNED_INT,   // type
             (void*)0       // element array buffer offset
     );
