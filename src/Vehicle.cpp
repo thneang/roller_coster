@@ -12,7 +12,7 @@ void Vehicle::init(const FilePath& applicationPath) {
     // avec mtllib du fichier OBJ mettre /nom_du_mtl
     // dans l'appel loadOBJ mettre repertoire mtl mais pas le fichier mtl
     this->vehicle.loadOBJ(
-            applicationPath.dirPath() + "assets/3D_models/Vehicle/vehicle.obj",
+            applicationPath.dirPath() + "assets/3D_models/Vehicle/wagon.obj",
             applicationPath.dirPath() + "assets/3D_models/Vehicle/",
             true
     );
@@ -21,7 +21,7 @@ void Vehicle::init(const FilePath& applicationPath) {
     program = loadProgram(applicationPath.dirPath() + "shaders/Vehicle.vs.glsl",
                 applicationPath.dirPath() + "shaders/Vehicle.fs.glsl");
 
-//    images[0] = loadImage(applicationPath.dirPath() + "assets/3D_models/Vehicle/vehicle.jpg");
+    images[0] = loadImage(applicationPath.dirPath() + "assets/textures/metal.jpg");
 
     init_texture();
 //    duplicate_vertex();
@@ -34,94 +34,112 @@ void Vehicle::init(const FilePath& applicationPath) {
 
 void Vehicle::init_texture() {
 
-    texture_ka_buffer = new GLuint[vehicle.getMeshCount()];
-    texture_kd_buffer = new GLuint[vehicle.getMeshCount()];
-    texture_ks_buffer = new GLuint[vehicle.getMeshCount()];
-    texture_Normal_buffer = new GLuint[vehicle.getMeshCount()];
-
-
+    texture = new GLuint[1];
     // créer un buffer pour notre texture
-    glGenTextures(vehicle.getMaterialCount(), texture);
+    glGenTextures(1, texture);
 
-    // Cette boucle reserve un id pour les buffer de texture et envoie les données pour chaque type (ka kd ks...)
-    for (unsigned int i = 0; i < vehicle.getMaterialCount(); ++i) {
+    // on bind la texture
+    glBindTexture(GL_TEXTURE_2D, texture[0]);
 
-        // Pour texture ka
-        if (vehicle.getMaterialBuffer()[i].m_pKaMap) {
-            // on bind la texture
-            glBindTexture(GL_TEXTURE_2D, texture_ka_buffer[i]);
-
-            // On envoie l'image
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
-                         vehicle.getMaterialBuffer()[i].m_pKaMap->getWidth(),
-                         vehicle.getMaterialBuffer()[i].m_pKaMap->getHeight(), 0, GL_RGBA, GL_FLOAT,
-                         vehicle.getMaterialBuffer()[i].m_pKaMap->getPixels());
+    // On envoie l'image
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, images[0]->getWidth(), images[0]->getHeight(), 0, GL_RGBA, GL_FLOAT, images[0]->getPixels());
 
 
-            // filtre pour deux cas
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // filtre pour deux cas
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-            glBindTexture(GL_TEXTURE_2D, 0);
-        }
-
-        // pour texture kd
-        if (vehicle.getMaterialBuffer()[i].m_pKdMap) {
-            // on bind la texture
-            glBindTexture(GL_TEXTURE_2D, texture_kd_buffer[i]);
-
-            // On envoie l'image
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
-                         vehicle.getMaterialBuffer()[i].m_pKdMap->getWidth(),
-                         vehicle.getMaterialBuffer()[i].m_pKdMap->getHeight(), 0, GL_RGBA, GL_FLOAT,
-                         vehicle.getMaterialBuffer()[i].m_pKdMap->getPixels());
+    glBindTexture(GL_TEXTURE_2D, 0);
 
 
-            // filtre pour deux cas
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-            glBindTexture(GL_TEXTURE_2D, 0);
-        }
-
-        // pour texture ks
-        if (vehicle.getMaterialBuffer()[i].m_pKsMap) {
-            // on bind la texture
-            glBindTexture(GL_TEXTURE_2D, texture_ks_buffer[i]);
-
-            // On envoie l'image
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
-                         vehicle.getMaterialBuffer()[i].m_pKsMap->getWidth(),
-                         vehicle.getMaterialBuffer()[i].m_pKsMap->getHeight(), 0, GL_RGBA, GL_FLOAT,
-                         vehicle.getMaterialBuffer()[i].m_pKsMap->getPixels());
-
-
-            // filtre pour deux cas
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-            glBindTexture(GL_TEXTURE_2D, 0);
-        }
-
-        // pour texture Normal
-        if (vehicle.getMaterialBuffer()[i].m_pNormalMap) {
-            // on bind la texture
-            glBindTexture(GL_TEXTURE_2D, texture_Normal_buffer[i]);
-
-            // On envoie l'image
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
-                         vehicle.getMaterialBuffer()[i].m_pNormalMap->getWidth(),
-                         vehicle.getMaterialBuffer()[i].m_pNormalMap->getHeight(), 0, GL_RGBA, GL_FLOAT,
-                         vehicle.getMaterialBuffer()[i].m_pNormalMap->getPixels());
-
-
-            // filtre pour deux cas
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-            glBindTexture(GL_TEXTURE_2D, 0);
-        }
-    }
+//    texture_ka_buffer = new GLuint[vehicle.getMeshCount()];
+//    texture_kd_buffer = new GLuint[vehicle.getMeshCount()];
+//    texture_ks_buffer = new GLuint[vehicle.getMeshCount()];
+//    texture_Normal_buffer = new GLuint[vehicle.getMeshCount()];
+//
+//
+//    // créer un buffer pour notre texture
+//    glGenTextures(vehicle.getMaterialCount(), texture);
+//
+//    // Cette boucle reserve un id pour les buffer de texture et envoie les données pour chaque type (ka kd ks...)
+//    for (unsigned int i = 0; i < vehicle.getMaterialCount(); ++i) {
+//
+//        // Pour texture ka
+//        if (vehicle.getMaterialBuffer()[i].m_pKaMap) {
+//            // on bind la texture
+//            glBindTexture(GL_TEXTURE_2D, texture_ka_buffer[i]);
+//
+//            // On envoie l'image
+//            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+//                         vehicle.getMaterialBuffer()[i].m_pKaMap->getWidth(),
+//                         vehicle.getMaterialBuffer()[i].m_pKaMap->getHeight(), 0, GL_RGBA, GL_FLOAT,
+//                         vehicle.getMaterialBuffer()[i].m_pKaMap->getPixels());
+//
+//
+//            // filtre pour deux cas
+//            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+//            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//
+//            glBindTexture(GL_TEXTURE_2D, 0);
+//        }
+//
+//        // pour texture kd
+//        if (vehicle.getMaterialBuffer()[i].m_pKdMap) {
+//            // on bind la texture
+//            glBindTexture(GL_TEXTURE_2D, texture_kd_buffer[i]);
+//
+//            // On envoie l'image
+//            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+//                         vehicle.getMaterialBuffer()[i].m_pKdMap->getWidth(),
+//                         vehicle.getMaterialBuffer()[i].m_pKdMap->getHeight(), 0, GL_RGBA, GL_FLOAT,
+//                         vehicle.getMaterialBuffer()[i].m_pKdMap->getPixels());
+//
+//
+//            // filtre pour deux cas
+//            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+//            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//
+//            glBindTexture(GL_TEXTURE_2D, 0);
+//        }
+//
+//        // pour texture ks
+//        if (vehicle.getMaterialBuffer()[i].m_pKsMap) {
+//            // on bind la texture
+//            glBindTexture(GL_TEXTURE_2D, texture_ks_buffer[i]);
+//
+//            // On envoie l'image
+//            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+//                         vehicle.getMaterialBuffer()[i].m_pKsMap->getWidth(),
+//                         vehicle.getMaterialBuffer()[i].m_pKsMap->getHeight(), 0, GL_RGBA, GL_FLOAT,
+//                         vehicle.getMaterialBuffer()[i].m_pKsMap->getPixels());
+//
+//
+//            // filtre pour deux cas
+//            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+//            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//
+//            glBindTexture(GL_TEXTURE_2D, 0);
+//        }
+//
+//        // pour texture Normal
+//        if (vehicle.getMaterialBuffer()[i].m_pNormalMap) {
+//            // on bind la texture
+//            glBindTexture(GL_TEXTURE_2D, texture_Normal_buffer[i]);
+//
+//            // On envoie l'image
+//            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+//                         vehicle.getMaterialBuffer()[i].m_pNormalMap->getWidth(),
+//                         vehicle.getMaterialBuffer()[i].m_pNormalMap->getHeight(), 0, GL_RGBA, GL_FLOAT,
+//                         vehicle.getMaterialBuffer()[i].m_pNormalMap->getPixels());
+//
+//
+//            // filtre pour deux cas
+//            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+//            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//
+//            glBindTexture(GL_TEXTURE_2D, 0);
+//        }
+//    }
 
 }
 
@@ -197,18 +215,23 @@ void Vehicle::draw() {
     uMVMatrixId = glGetUniformLocation(program.getGLId(), "uMVMatrix");
     uNormalMatrixId = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
 
+    mat4 scale = glm::scale(MatrixID, vec3(2.f, 2.f, 2.f));
+    mat4 rotate = glm::rotate(MatrixID, 90.0f, vec3(0.0f, -1.0f, 0.0f));
+
+    glBindTexture(GL_TEXTURE_2D, texture[0]);
+    glUniform1i(uTextureId, 0);
+
     for (unsigned int i = 0; i < vehicle.getMeshCount(); ++i) {
 
         // donne la texture au shader pour l'appliquer avec draw
-        if (vehicle.getMaterialBuffer()[i].m_pKdMap) {
-            glBindTexture(GL_TEXTURE_2D, texture_kd_buffer[i]);
+//        if (vehicle.getMaterialBuffer()[i].m_pKdMap) {
+//            glBindTexture(GL_TEXTURE_2D, texture_kd_buffer[i]);
 //            glUniform1i(utexture_kd_ID, 0);
-        }
+//        }
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elements[i]);
 
-        mat4 scale = glm::scale(MatrixID, vec3(0.1f, 0.1f, 0.1f));
-        mat4 rotate = glm::rotate(MatrixID, 90.0f, vec3(0.0f, -1.0f, 0.0f));
+
 
         MVMatrixMul = MVMatrix * scale * rotate;
         NormalMatrixMul = transpose(MVMatrixMul);

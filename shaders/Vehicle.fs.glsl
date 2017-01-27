@@ -14,5 +14,5 @@ uniform sampler2D uTextureNormal;
 
 
 void main() {
-    fFragColor = texture(uTextureKd, vTexCoords).xyz;
+    fFragColor = texture(uTexture, vTexCoords).xyz;
 }
