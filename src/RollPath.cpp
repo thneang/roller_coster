@@ -16,7 +16,7 @@ void RollPath::initCurve(){
         vec3 p1 = list_point_base[i+1].m_Position;
         vec3 p2 = list_point_base[i+2].m_Position;
         vec3 p3 = list_point_base[i+3].m_Position;
-        for(float t=0.0f ; t < 1.0f ; t+=1/100.0f) {
+        for(float t=0.0f ; t < 1.0f ; t+=1/1000.0f) {
             vec3 pos = p0 * (1 - t) * (1 - t) * (1 - t) + 3.0f * p1 * t * (1 - t) * (1 - t) + 3.0f * p2 * t * t * (1 - t) +
                        p3 * t * t * t;
             Geometry::Vertex v;
@@ -127,7 +127,7 @@ void RollPath::add_point_controle(vec3 v1, vec3 v2, vec3 v3){
 }
 
 glm::vec3 RollPath::getPointOfTime(float time){
-    int time_s = time/10000;
+    int time_s = time/1000;
     std::cout << "mvet0" << m_VertexBuffer[0].m_Position << std::endl;
     return m_VertexBuffer[time_s % int(m_VertexBuffer.size()-1)].m_Position;
 }
