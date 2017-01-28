@@ -30,8 +30,9 @@ void Vehicle::init(const FilePath& applicationPath) {
     init_vao();
     init_index();
 
+    mat4 rotate = glm::rotate(MatrixID, 90.0f, vec3(0.0f, -1.0f, 0.0f));
+    RollMatrix *= rotate;
     vehicle.freeIndexBuffer();
-    vehicle.freeVertexBuffer();
 
 }
 
@@ -233,12 +234,13 @@ void Vehicle::draw() {
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elements[i]);
 
+        mat4 rotate = glm::rotate(MatrixID, 90.0f, vec3(0.0f, -1.0f, 0.0f));
+        mat4 translate = glm::translate(MatrixID,vec3(600,1000,0));
 
-
-        MVMatrixMul = MVMatrix * scale;
+        MVMatrixMul = MVMatrix * RollMatrix;
         NormalMatrixMul = transpose(MVMatrixMul);
 
-        glUniformMatrix4fv(uMVPMatrixId, 1, GL_FALSE, value_ptr(ProjMatrix * ProjMatrixMul * MVMatrixMul));
+        glUniformMatrix4fv(uMVPMatrixId, 1, GL_FALSE, value_ptr(ProjMatrix * MVMatrixMul));
         glUniformMatrix4fv(uMVMatrixId, 1, GL_FALSE, value_ptr(MVMatrixMul));
         glUniformMatrix4fv(uNormalMatrixId, 1, GL_FALSE, value_ptr(NormalMatrixMul));
 
@@ -262,20 +264,30 @@ void Vehicle::draw() {
 }
 
 void Vehicle::roll(glm::vec3 v){
-    glm::vec3 vCenter = center(vehicle.getBoundingBox());
 
     //angleY = cos-1(adj/hyp) = cos-1(V(x²+z²)/norme(v-vCenter))
 //    std::cout <<(v.x-vCenter.x)*(v.x-vCenter.x)+(v.z-vCenter.z)*(v.z-vCenter.z)<< " " << (v-vCenter).length() << std::endl;
 //    std::cout <<acos(glm::sqrt((v.x-vCenter.x)*(v.x-vCenter.x)+(v.z-vCenter.z)*(v.z-vCenter.z))/(v-vCenter).length()) << std::endl;
-    rotate(acos(glm::sqrt((v.x-vCenter.x)*(v.x-vCenter.x)+(v.z-vCenter.z)*(v.z-vCenter.z))/(v-vCenter).length()),vec3(0,1,0));
-
-    //angleX = cos-1(adj/hyp) = cos-1(z/V(x²+z²))
-    rotate(acos((v.z-vCenter.z)/glm::sqrt((v.x-vCenter.x)*(v.x-vCenter.x)+(v.z-vCenter.z)*(v.z-vCenter.z))),vec3(1,0,0));
-
-    translate(v);
+    if(v != vCenter){
+        std::cout << m_VertexBuffer.size() << std::endl;
+        std::cout << "v "<< v << " center "<< vCenter << "trans "<< v-vCenter << std::endl;
+//        rotate(acos(glm::sqrt((v.x-vCenter.x)*(v.x-vCenter.x)+(v.z-vCenter.z)*(v.z-vCenter.z))/(v-vCenter).length()),vec3(0,1,0));
+        //angleX = cos-1(adj/hyp) = cos-1(z/V(x²+z²))
+//        rotate(acos((v.z-vCenter.z)/glm::sqrt((v.x-vCenter.x)*(v.x-vCenter.x)+(v.z-vCenter.z)*(v.z-vCenter.z))),vec3(1,0,0));
+//        float angle1 = acos(glm::sqrt((v.x-vCenter.x)*(v.x-vCenter.x)+(v.z-vCenter.z)*(v.z-vCenter.z))/(v-vCenter).length());
+//        mat4 rotate = glm::rotate(MatrixID,angle1,vec3(0,1,0));
+//        float angle2 = acos((v.z-vCenter.z)/glm::sqrt((v.x-vCenter.x)*(v.x-vCenter.x)+(v.z-vCenter.z)*(v.z-vCenter.z)));
+//        rotate *= glm::rotate(MatrixID,angle2,vec3(1,0,0));
+        //translate :
+        mat4 translate = glm::translate(MatrixID,v-vCenter);
+        RollMatrix *= translate;
+//        translate(v-vCenter);
+    }
+    vCenter = v;
 }
 
 void Vehicle::free() {
     glDeleteBuffers(1, &vbo);
     glDeleteVertexArrays(1, &vao);
+    vehicle.freeVertexBuffer();
 }

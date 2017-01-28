@@ -111,8 +111,8 @@ public :
 
     virtual void scale(glm::vec3 v){
         glm::mat4 scale = glm::scale(global::MVMatrix,v);
-        ProjMatrixMul += scale;
-        NormalMatrixMul += scale;
+        ProjMatrixMul *= scale;
+        NormalMatrixMul *= scale;
     }
 };
 

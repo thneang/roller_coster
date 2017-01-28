@@ -15,28 +15,29 @@ void World::init(const FilePath& filepath) {
     RollPath *rollPath = new RollPath();
     world.push_back(std::move(rollPath));
 
-    Vehicle *vehicle = new Vehicle();
-    world.push_back(std::move(vehicle));
+    vehicle = new Vehicle();
 
-    Sky *sky = new Sky();
-    world.push_back(std::move(sky));
+
+//    Sky *sky = new Sky();
+//    world.push_back(std::move(sky));
 
     for (Drawable *object : world) {
         object->init(filepath);
     }
+    vehicle->init(filepath);
 }
 
 void World::draw() {
     if(isRolling()){
         RollPath *r  = (RollPath*)world[1];
-        Vehicle *v = (Vehicle*)world[2];
         clock_t a = clock();
         vec3 vec = r->getPointOfTime(a - clock_start + timeRolled);
-        v->roll(vec);
+        vehicle->roll(vec);
     }
     for (Drawable *object : world) {
         object->draw();
     }
+    vehicle->draw();
 }
 
 //void World::rotateCamera(vec2 v){
@@ -84,4 +85,5 @@ void World::free() {
     for (Drawable *object : world) {
         object->free();
     }
+    vehicle->free();
 }

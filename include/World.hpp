@@ -2,6 +2,7 @@
 #define ROLLER_COSTER_WORLD_HPP
 
 #include <Drawable.hpp>
+#include <Vehicle.hpp>
 
 class World : public Drawable {
 
@@ -10,6 +11,7 @@ private :
     std::vector<Drawable*> world;
 
     // used for vehicle's roll
+    Vehicle *vehicle;
     bool vehicleIsRolling = false;
     clock_t clock_start;
     float timeStart = 0;
