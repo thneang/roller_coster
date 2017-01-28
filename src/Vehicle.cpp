@@ -265,23 +265,15 @@ void Vehicle::draw() {
 
 void Vehicle::roll(glm::vec3 v){
 
-    //angleY = cos-1(adj/hyp) = cos-1(V(x²+z²)/norme(v-vCenter))
-//    std::cout <<(v.x-vCenter.x)*(v.x-vCenter.x)+(v.z-vCenter.z)*(v.z-vCenter.z)<< " " << (v-vCenter).length() << std::endl;
-//    std::cout <<acos(glm::sqrt((v.x-vCenter.x)*(v.x-vCenter.x)+(v.z-vCenter.z)*(v.z-vCenter.z))/(v-vCenter).length()) << std::endl;
     if(v != vCenter){
-        std::cout << m_VertexBuffer.size() << std::endl;
-        std::cout << "v "<< v << " center "<< vCenter << "trans "<< v-vCenter << std::endl;
-//        rotate(acos(glm::sqrt((v.x-vCenter.x)*(v.x-vCenter.x)+(v.z-vCenter.z)*(v.z-vCenter.z))/(v-vCenter).length()),vec3(0,1,0));
-        //angleX = cos-1(adj/hyp) = cos-1(z/V(x²+z²))
-//        rotate(acos((v.z-vCenter.z)/glm::sqrt((v.x-vCenter.x)*(v.x-vCenter.x)+(v.z-vCenter.z)*(v.z-vCenter.z))),vec3(1,0,0));
+        //les rotates qu'on est supposé faire.
 //        float angle1 = acos(glm::sqrt((v.x-vCenter.x)*(v.x-vCenter.x)+(v.z-vCenter.z)*(v.z-vCenter.z))/(v-vCenter).length());
-//        mat4 rotate = glm::rotate(MatrixID,angle1,vec3(0,1,0));
+//        mat4 rotate = glm::rotate(MatrixID,angle1,vec3(1,0,0));
 //        float angle2 = acos((v.z-vCenter.z)/glm::sqrt((v.x-vCenter.x)*(v.x-vCenter.x)+(v.z-vCenter.z)*(v.z-vCenter.z)));
-//        rotate *= glm::rotate(MatrixID,angle2,vec3(1,0,0));
+//        mat4 rotate = glm::rotate(MatrixID,angle2,vec3(0,1,0));
         //translate :
         mat4 translate = glm::translate(MatrixID,v-vCenter);
         RollMatrix *= translate;
-//        translate(v-vCenter);
     }
     vCenter = v;
 }

@@ -128,7 +128,6 @@ void RollPath::add_point_controle(vec3 v1, vec3 v2, vec3 v3){
 
 glm::vec3 RollPath::getPointOfTime(float time){
     int time_s = time/1000;
-    std::cout << "mvet0" << m_VertexBuffer[0].m_Position << std::endl;
     return m_VertexBuffer[time_s % int(m_VertexBuffer.size()-1)].m_Position;
 }
 
