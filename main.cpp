@@ -14,7 +14,7 @@ int main(int argc, char** argv) {
     // Initialize SDL and open a window
 //    int width = glutGet(GLUT_SCREEN_WIDTH);
 //    int height = glutGet(GLUT_SCREEN_HEIGHT);
-    SDLWindowManager windowManager(/*width, height*/800,600, "GLImac");
+    SDLWindowManager windowManager(/*width, height*/WIN_WIDTH,WIN_HEIGTH, "GLImac");
     // Initialize glew for OpenGL3+ support
     GLenum glewInitError = glewInit();
     if(GLEW_OK != glewInitError) {

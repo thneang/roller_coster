@@ -17,8 +17,8 @@ void World::init(const FilePath& filepath) {
 
 
     /************************ à commenter pour voir la trajectoire ****************************************************/
-//    Sky *sky = new Sky();
-//    world.push_back(std::move(sky));
+    Sky *sky = new Sky();
+    world.push_back(std::move(sky));
     /******************************************************************************************************************/
 
 
