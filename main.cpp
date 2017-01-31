@@ -105,6 +105,8 @@ int main(int argc, char** argv) {
         /*********************************
          * HERE SHOULD COME THE RENDERING CODE
          *********************************/
+
+//        freeFlyCamera.setPosition(world.vehiclePosition());
         world.draw();
 
         // Update the display

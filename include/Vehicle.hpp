@@ -32,6 +32,8 @@ public :
 
     void roll(glm::vec3 v);
 
+    glm::vec3 getCenter();
+
     void free();
 };
 

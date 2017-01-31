@@ -24,6 +24,10 @@ public:
         glm::mat4 res;
         return res;
     }
+
+    void setPosition(glm::vec3 &&position) {
+        m_Position = position;
+    }
 };
 
 

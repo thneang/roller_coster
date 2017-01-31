@@ -1,7 +1,5 @@
 #include <World.hpp>
-#include <RollPath.hpp>
 #include <Environnement.hpp>
-#include <Vehicle.hpp>
 #include <Sky.hpp>
 
 using namespace global;
@@ -18,8 +16,11 @@ void World::init(const FilePath& filepath) {
     vehicle = new Vehicle();
 
 
+    /************************ à commenter pour voir la trajectoire ****************************************************/
     Sky *sky = new Sky();
     world.push_back(std::move(sky));
+    /******************************************************************************************************************/
+
 
     for (Drawable *object : world) {
         object->init(filepath);
@@ -39,13 +40,6 @@ void World::draw() {
     }
     vehicle->draw();
 }
-
-//void World::rotateCamera(vec2 v){
-//    ProjMatrix = glm::rotate(ProjMatrix,v.x/100,vec3(0,1,0));
-//    NormalMatrix *= ProjMatrix;
-//    ProjMatrix = glm::rotate(ProjMatrix,v.y/100,vec3(1,0,0));
-//    NormalMatrix *= ProjMatrix;
-//}
 
 void World::rotate(float angle, vec3 v){
     MVMatrix = glm::rotate(MVMatrix,angle,v);
@@ -75,6 +69,10 @@ void World::vehicleStop() {
     vehicleIsRolling = false;
     clock_t c = clock();
     timeRolled += c - clock_start;
+}
+
+glm::vec3 World::vehiclePosition() {
+    return vehicle->getCenter();
 }
 
 bool World::isRolling() {

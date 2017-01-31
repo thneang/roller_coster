@@ -273,6 +273,10 @@ void Vehicle::roll(glm::vec3 v){
     vCenter = v;
 }
 
+glm::vec3 Vehicle::getCenter() {
+    return vCenter;
+}
+
 void Vehicle::free() {
     glDeleteBuffers(1, &vbo);
     glDeleteVertexArrays(1, &vao);

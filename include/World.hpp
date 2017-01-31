@@ -35,6 +35,8 @@ public :
 
     void vehicleStop();
 
+    glm::vec3 vehiclePosition();
+
     bool isRolling();
 
     void free();
