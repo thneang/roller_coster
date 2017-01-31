@@ -14,11 +14,11 @@ void FreeFlyCamera::computeDirectionVectors() {
 }
 
 void FreeFlyCamera::moveLeft(float t) {
-    m_Position += 20 * t * m_LeftVector;
+    m_Position += 5 * t * m_LeftVector;
 }
 
 void FreeFlyCamera::moveFront(float t) {
-    m_Position += 20 * t * m_FrontVector;
+    m_Position += 5 * t * m_FrontVector;
 }
 
 float FreeFlyCamera::rotateLeft(float degrees) {
