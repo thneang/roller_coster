@@ -14,6 +14,8 @@ private :
 
     glm::mat4 RollMatrix;
 
+    glm::mat4 scale = glm::scale(global::MatrixID, glm::vec3(2.f, 2.f, 2.f));
+
 public :
 
     void init(const glimac::FilePath& filepath = nullptr);

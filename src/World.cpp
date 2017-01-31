@@ -18,8 +18,8 @@ void World::init(const FilePath& filepath) {
     vehicle = new Vehicle();
 
 
-//    Sky *sky = new Sky();
-//    world.push_back(std::move(sky));
+    Sky *sky = new Sky();
+    world.push_back(std::move(sky));
 
     for (Drawable *object : world) {
         object->init(filepath);

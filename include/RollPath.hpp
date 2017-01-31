@@ -14,8 +14,6 @@ private:
     std::vector<Geometry::Vertex> list_point_base;
 
     void add_point_controle(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3);
-    // Sommets formant la courbe de bézier
-//    std::vector<Geometry::Vertex> m_bezier_vertex_buffer;
 
 public:
     void initCurve();
@@ -33,8 +31,6 @@ public:
     void init_index();
 
     void draw();
-
-    void duplicate_vertex();
 
     void free();
 };

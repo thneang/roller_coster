@@ -7,6 +7,7 @@ class Sky : public Drawable {
 
 private :
     glimac::Geometry sky;
+    glm::mat4 scale = glm::scale(global::MatrixID, glm::vec3(50.f, 50.f, 50.f));
 
 
 public :

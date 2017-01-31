@@ -7,10 +7,10 @@ in vec2 vTexCoords;
 out vec3 fFragColor;
 
 uniform sampler2D uTexture;
-uniform sampler2D uTextureKa;
-uniform sampler2D uTextureKd;
-uniform sampler2D uTextureKs;
-uniform sampler2D uTextureNormal;
+//uniform sampler2D uTextureKa;
+//uniform sampler2D uTextureKd;
+//uniform sampler2D uTextureKs;
+//uniform sampler2D uTextureNormal;
 
 
 void main() {

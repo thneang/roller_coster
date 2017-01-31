@@ -129,8 +129,6 @@ void Sky::draw() {
     glBindTexture(GL_TEXTURE_2D, texture[0]);
     glUniform1i(uTextureId, 0);
 
-    mat4 scale = glm::scale(MatrixID, vec3(110.f, 110.f, 110.f));
-
     for (unsigned int i = 0; i < sky.getMeshCount(); ++i) {
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elements[i]);

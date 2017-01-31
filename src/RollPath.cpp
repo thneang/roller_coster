@@ -217,9 +217,6 @@ void RollPath::draw(){
 
 }
 
-void RollPath::duplicate_vertex(){
-}
-
 void RollPath::free(){
     glDeleteBuffers(1, &vbo);
     glDeleteVertexArrays(1, &vao);

@@ -43,8 +43,6 @@ int main(int argc, char** argv) {
         // Mets a jour les matrices du monde
         MVMatrix = camera->getViewMatrix();
         NormalMatrix = transpose(inverse(MVMatrix));
-        //utiliser pour avancer le véhicule
-        float time = windowManager.getTime();
         // Event loop:
         SDL_Event e;
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

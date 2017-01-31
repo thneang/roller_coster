@@ -1,5 +1,4 @@
 #include <Vehicle.hpp>
-#include <zconf.h>
 
 using namespace glimac;
 using namespace std;
@@ -219,7 +218,6 @@ void Vehicle::draw() {
     uMVMatrixId = glGetUniformLocation(program.getGLId(), "uMVMatrix");
     uNormalMatrixId = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
 
-    mat4 scale = glm::scale(MatrixID, vec3(2.f, 2.f, 2.f));
 
     glBindTexture(GL_TEXTURE_2D, texture[0]);
     glUniform1i(uTextureId, 0);
@@ -233,9 +231,6 @@ void Vehicle::draw() {
 //        }
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elements[i]);
-
-        mat4 rotate = glm::rotate(MatrixID, 90.0f, vec3(0.0f, -1.0f, 0.0f));
-        mat4 translate = glm::translate(MatrixID,vec3(600,1000,0));
 
         MVMatrixMul = MVMatrix * RollMatrix;
         NormalMatrixMul = transpose(MVMatrixMul);
